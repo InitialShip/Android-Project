@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SearchFragment"
+    android:background="@color/light_blue">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_margin="15dp"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="Search"
+            android:background="@color/white"
+            android:id="@+id/search_view"/>
+        <LinearLayout
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/white"
+                android:layout_marginBottom="15dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/white"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
