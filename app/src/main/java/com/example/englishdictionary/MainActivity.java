@@ -4,15 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
@@ -20,12 +24,14 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
 
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +56,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.print(e.getMessage());
         }
 
-        NavigationView navView =  findViewById(R.id.navigation_view);
+        navView =  findViewById(R.id.navigation_view);
         navView.setNavigationItemSelectedListener(this);
-        replaceFragment(new SearchFragment());
-        navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+        checkFragment();
+    }
 
+    void checkFragment() {
+        Intent intent = getIntent();
+        int check_frag = intent.getIntExtra("check_frag", 0);
+        int check_btn = intent.getIntExtra("check_btn", 0);
+
+        if (check_frag == 1) {
+            TransFragment fragment = new TransFragment();
+
+            String choosed_lang = intent.getStringExtra("lang");
+            if (choosed_lang != null) {
+                if (check_btn == 1)
+                    MyApplication.setCurrent_target(choosed_lang);
+                else
+                    MyApplication.setCurrent_source(choosed_lang);
+
+            }
+            replaceFragment(fragment);
+            navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
+        } else {
+            replaceFragment(new SearchFragment());
+            navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+        }
     }
 
 //    @Override

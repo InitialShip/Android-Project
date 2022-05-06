@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
+    SearchView mSearchView;
 
     SearchView searchView;
     RecyclerView recyclerView;
