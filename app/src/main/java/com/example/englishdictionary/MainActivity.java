@@ -60,7 +60,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView.getMenu().findItem(R.id.nav_search).setChecked(true);
     }
 
-
+    private String dictionaryEntries() {
+        final String language = "en-gb";
+        final String word = "Ace";
+        final String fields = "pronunciations";
+        final String strictMatch = "false";
+        final String word_id = word.toLowerCase();
+        return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" +
+                language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
+    }
 
 //    @Override
 //    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
