@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="Search"
             android:background="@color/white"
-            android:id="@+id/search_view"/>
+            android:id="@+id/search_view">
+        </androidx.appcompat.widget.SearchView>
         <LinearLayout
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
@@ -28,14 +29,16 @@
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/white"
-                android:layout_marginBottom="15dp"/>
+                android:layout_height="247dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:background="@color/white"
                 android:layout_marginBottom="15dp"/>
+
+
         </LinearLayout>
 
     </LinearLayout>

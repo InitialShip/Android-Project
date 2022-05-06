@@ -1,7 +1,6 @@
 package com.example.englishdictionary;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,9 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
+import com.example.englishdictionary.oxford.DictionaryRequest;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         replaceFragment(new SearchFragment());
         navView.getMenu().findItem(R.id.nav_search).setChecked(true);
 
+        new DictionaryRequest().execute(dictionaryEntries());//Test
+
     }
+    private String dictionaryEntries() {
+        final String language = "en-gb";
+        final String word = "Ace";
+        final String fields = "pronunciations";
+        final String strictMatch = "false";
+        final String word_id = word.toLowerCase();
+        return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" + language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
+    }
+
 
 //    @Override
 //    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
