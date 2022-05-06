@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.print(e.getMessage());
         }
 
-        NavigationView navView =  findViewById(R.id.navigation_view);
+        navView =  findViewById(R.id.navigation_view);
         navView.setNavigationItemSelectedListener(this);
-        replaceFragment(new SearchFragment());
-        navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+        checkFragment();
+    }
+
+    void checkFragment() {
+        Intent intent = getIntent();
+        int check_frag = intent.getIntExtra("check_frag", 0);
+        int check_btn = intent.getIntExtra("check_btn", 0);
+
+        if (check_frag == 1) {
+            TransFragment fragment = new TransFragment();
+
+            String choosed_lang = intent.getStringExtra("lang");
+            if (choosed_lang != null) {
+                if (check_btn == 1)
+                    MyApplication.setCurrent_target(choosed_lang);
+                else
+                    MyApplication.setCurrent_source(choosed_lang);
+
+            }
+            replaceFragment(fragment);
+            navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
+        } else {
+            replaceFragment(new SearchFragment());
+            navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+        }
     }
 
     private String dictionaryEntries() {

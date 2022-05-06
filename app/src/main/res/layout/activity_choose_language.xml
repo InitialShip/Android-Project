@@ -10,13 +10,12 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/no_radius_gray_button">
+        android:background="@drawable/gray_background">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/no_radius_gray_button"
+            android:background="@drawable/gray_background"
             android:paddingStart="0dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_cancel_choose"

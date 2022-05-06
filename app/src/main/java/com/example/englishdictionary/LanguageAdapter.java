@@ -1,6 +1,7 @@
 package com.example.englishdictionary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,14 @@ public class LanguageAdapter extends ArrayAdapter<String> {
     Context context;
     String[] lan;
     String[] display;
+    int check;
 
-    public LanguageAdapter(@NonNull Context context, String[] lan, String[] display) {
+    public LanguageAdapter(@NonNull Context context, String[] lan, String[] display, int check) {
         super(context, R.layout.language_item, R.id.tv_language, lan);
         this.context = context;
         this.lan = lan;
         this.display = display;
+        this.check = check;
     }
 
     @NonNull
@@ -42,7 +45,18 @@ public class LanguageAdapter extends ArrayAdapter<String> {
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "You Clicked" + display[position], Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, MainActivity.class);
+
+                intent.putExtra("check_frag", 1);
+                intent.putExtra("lang", lan[position]);
+
+                if (check == 1) {
+                    intent.putExtra("check_btn", 1);
+                }
+                else {
+                    intent.putExtra("check_btn", 0);
+                }
+                context.startActivity(intent);
             }
         });
 
