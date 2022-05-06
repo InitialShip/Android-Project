@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.SearchFragment"
-    android:background="@color/light_blue">
+    android:background="@color/light_blue"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:clipToPadding="false"
+        android:paddingBottom="88dp"
+        android:paddingTop="88dp"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_margin="15dp"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="Search"
+        app:queryHint="@string/search_term"
+        android:background="@drawable/search_background"
+        android:backgroundTint="#ebeced"
+        android:id="@+id/search_view"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/search_icon" />
 
-        <androidx.appcompat.widget.SearchView
-            android:layout_margin="15dp"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:autofillHints="Search"
-            android:background="@color/white"
-            android:id="@+id/search_view"/>
-        <LinearLayout
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/white"
-                android:layout_marginBottom="15dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/white"
-                android:layout_marginBottom="15dp"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</ScrollView>
+</FrameLayout>
