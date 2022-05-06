@@ -44,10 +44,10 @@ public class ExamplesListInner   {
   private CategorizedTextList notes = null;
 
   @SerializedName("regions")
-  private String[] regions = null;
+  private Object regions = null;
 
   @SerializedName("registers")
-  private String[] registers = null;
+  private Object registers = null;
 
   @SerializedName("senseIds")
   private String[] senseIds = null;
@@ -118,7 +118,7 @@ public class ExamplesListInner   {
    * A particular area in which the pronunciation occurs, e.g. 'Great Britain'
    * @return regions
   **/
-  public String[] getRegions() {
+  public Object getRegions() {
     return regions;
   }
 
@@ -135,7 +135,7 @@ public class ExamplesListInner   {
    * A level of language usage, typically with respect to formality. e.g. 'offensive', 'informal'
    * @return registers
   **/
-  public String[] getRegisters() {
+  public Object getRegisters() {
     return registers;
   }
 

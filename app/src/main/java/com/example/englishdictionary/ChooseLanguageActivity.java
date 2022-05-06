@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.englishdictionary.adapters.LanguageAdapter;
+import com.example.englishdictionary.dictionarystranlate.Languages;
+
 public class ChooseLanguageActivity extends AppCompatActivity {
 
     ListView lv_languages;

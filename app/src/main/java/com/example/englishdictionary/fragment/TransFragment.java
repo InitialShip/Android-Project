@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.englishdictionary.ChooseLanguageActivity;
-import com.example.englishdictionary.Languages;
+import com.example.englishdictionary.dictionarystranlate.Languages;
 import com.example.englishdictionary.MyApplication;
 import com.example.englishdictionary.R;
-
-import java.security.Key;
 
 public class TransFragment extends Fragment {
     Button btn_source, btn_target, btn_sound, btn_cancel_trans;

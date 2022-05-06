@@ -49,7 +49,7 @@ public class LexicalEntry   {
   private String language = null;
 
   @SerializedName("lexicalCategory")
-  private String lexicalCategory = null;
+  private LexialCategory lexicalCategory = null;
 
   @SerializedName("notes")
   private CategorizedTextList notes = null;
@@ -136,7 +136,7 @@ public class LexicalEntry   {
     this.language = language;
   }
 
-  public LexicalEntry lexicalCategory(String lexicalCategory) {
+  public LexicalEntry lexicalCategory(LexialCategory lexicalCategory) {
     this.lexicalCategory = lexicalCategory;
     return this;
   }
@@ -145,11 +145,11 @@ public class LexicalEntry   {
    * A linguistic category of words (or more precisely lexical items), generally defined by the syntactic or morphological behaviour of the lexical item in question, such as noun or verb
    * @return lexicalCategory
   **/
-  public String getLexicalCategory() {
+  public LexialCategory getLexicalCategory() {
     return lexicalCategory;
   }
 
-  public void setLexicalCategory(String lexicalCategory) {
+  public void setLexicalCategory(LexialCategory lexicalCategory) {
     this.lexicalCategory = lexicalCategory;
   }
 

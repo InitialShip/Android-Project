@@ -1,4 +1,4 @@
-package com.example.englishdictionary;
+package com.example.englishdictionary.dictionarystranlate;
 
 public class Languages {
     public final static String[] lans = {"en", "ar", "zh", "fa", "fr", "ka", "de", "el", "gu", "ha", "hi", "ig", "id",

@@ -46,7 +46,7 @@ public class Sense   {
   private String[] definitions = null;
 
   @SerializedName("domains")
-  private String[] domains = null;
+  private Object domains = null;
 
   @SerializedName("examples")
   private ExamplesList examples = null;
@@ -61,10 +61,10 @@ public class Sense   {
   private PronunciationsList pronunciations = null;
 
   @SerializedName("regions")
-  private String[] regions = null;
+  private Object regions = null;
 
   @SerializedName("registers")
-  private String[] registers = null;
+  private Object registers = null;
 
   @SerializedName("subsenses")
   private List<Sense> subsenses = new ArrayList<Sense>();
@@ -135,7 +135,7 @@ public class Sense   {
    * A subject, discipline, or branch of knowledge particular to the Sense
    * @return domains
   **/
-  public String[] getDomains() {
+  public Object getDomains() {
     return domains;
   }
 
@@ -220,7 +220,7 @@ public class Sense   {
    * A particular area in which the Sense occurs, e.g. 'Great Britain'
    * @return regions
   **/
-  public String[] getRegions() {
+  public Object getRegions() {
     return regions;
   }
 
@@ -237,7 +237,7 @@ public class Sense   {
    * A level of language usage, typically with respect to formality. e.g. 'offensive', 'informal'
    * @return registers
   **/
-  public String[] getRegisters() {
+  public Object getRegisters() {
     return registers;
   }
 

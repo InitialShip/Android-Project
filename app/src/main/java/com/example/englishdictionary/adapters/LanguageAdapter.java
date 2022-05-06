@@ -1,4 +1,4 @@
-package com.example.englishdictionary;
+package com.example.englishdictionary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.englishdictionary.MainActivity;
+import com.example.englishdictionary.R;
+import com.example.englishdictionary.dictionarystranlate.LanguageViewHolder;
 
 public class LanguageAdapter extends ArrayAdapter<String> {
     Context context;

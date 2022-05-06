@@ -13,7 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/category"
@@ -22,6 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:textStyle="italic"
+            android:textColor="@color/black"
             tools:text="(noun)" />
 
         <TextView
@@ -52,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/etymology"
             android:layout_marginTop="8dp"
+            android:textColor="@color/blue"
             tools:text="Tasty when fried for breakfast" />
 
     </RelativeLayout>
