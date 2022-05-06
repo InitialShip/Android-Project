@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/od_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EnglishDictionary.NoActionBar">
+        android:theme="@style/Theme.EnglishDictionary.NoActionBar"
+        android:name=".MyApplication">
         <activity
             android:name=".ChooseLanguageActivity"
             android:exported="false" />
