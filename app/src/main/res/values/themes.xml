@@ -17,5 +17,6 @@
     <style name="Theme.EnglishDictionary.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:editTextColor">@android:color/black</item>
     </style>
 </resources>

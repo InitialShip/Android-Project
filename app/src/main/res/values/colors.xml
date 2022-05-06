@@ -11,4 +11,5 @@
     <color name="dark_gray">#202124</color>
     <color name="blue">#1c47c8</color>
     <color name="light_blue">#0ca3e0</color>
+    <color name="transparent">@null</color>
 </resources>

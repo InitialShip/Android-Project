@@ -4,21 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
 
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
@@ -54,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navView.setNavigationItemSelectedListener(this);
         replaceFragment(new SearchFragment());
         navView.getMenu().findItem(R.id.nav_search).setChecked(true);
-
     }
+
+
 
 //    @Override
 //    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
