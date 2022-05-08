@@ -22,15 +22,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/light_gray"
-        app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         android:layout_margin="16sp">
 
-        <androidx.appcompat.widget.SearchView
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:defaultQueryHint="@string/search_term"
-            app:iconifiedByDefault="false"
+            android:hint="@string/search_term"
+            android:completionThreshold="1"
+            android:drawableStart="@drawable/search_icon"
+            android:padding="10dp"
             android:id="@+id/search_view"/>
     </androidx.cardview.widget.CardView>
 

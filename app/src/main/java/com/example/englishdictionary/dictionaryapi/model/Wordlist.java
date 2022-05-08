@@ -27,6 +27,7 @@ package com.example.englishdictionary.dictionaryapi.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

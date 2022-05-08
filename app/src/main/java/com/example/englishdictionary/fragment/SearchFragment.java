@@ -1,20 +1,23 @@
 package com.example.englishdictionary.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.example.englishdictionary.R;
@@ -24,18 +27,18 @@ import com.example.englishdictionary.dictionaryapi.RequestManager;
 import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.LexicalEntry;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
-import com.example.englishdictionary.dictionaryapi.model.Sense;
 import com.example.englishdictionary.dictionarylookup.CategotyEntry;
 import com.example.englishdictionary.dictionarylookup.Definition;
+import com.example.englishdictionary.dictionarylookup.searchsuggests.DataHelper;
+import com.example.englishdictionary.dictionarylookup.searchsuggests.WordSuggest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
-    SearchView mSearchView;
 
-    SearchView searchView;
+    AutoCompleteTextView searchView;
     RecyclerView recyclerView;
     FloatingActionButton btnSearch;
     DefinitionAdapter definitionAdapter;
@@ -51,41 +54,68 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        searchView = (SearchView) view.findViewById(R.id.search_view);
+        searchView = (AutoCompleteTextView) view.findViewById(R.id.search_view);
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         btnSearch = (FloatingActionButton) view.findViewById(R.id.btn_search);
 
-        RequestManager requestManager = new RequestManager(getContext());
-        requestManager.getWordMeaning(listener, "hello");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                RequestManager requestManager = new RequestManager(getContext());
-                requestManager.getWordMeaning(listener, query);
-                return true;
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //show word suggest
+                getAllWord();
             }
         });
+
+        RequestManager requestManager = new RequestManager(getContext());
+        requestManager.getWordMeaning(dataListener, "hello");
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RequestManager requestManager = new RequestManager(getContext());
-                requestManager.getWordMeaning(listener, searchView.getQuery().toString());
+                requestManager.getWordMeaning(dataListener, searchView.getText().toString());
             }
         });
     }
 
-    private final OnFetchDataListener listener = new OnFetchDataListener() {
+    private void getAllWord() {
+        final List<String> WORDS = new ArrayList<>();
+        if (!searchView.getText().toString().equals("")) {
+            DataHelper.findSuggestions(getContext(), searchView.getText().toString(), 5
+                    , new DataHelper.OnFindWordsListener() {
+
+                @Override
+                public void onResults(List<WordSuggest> results) {
+                    try {
+                        for (WordSuggest w : results) {
+                            WORDS.add(w.getWord());
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext()
+                                , R.layout.search_autocomplete_row, R.id.word_suggest, WORDS);
+                        searchView.setAdapter(adapter);
+                    } catch (NullPointerException n) {
+                        n.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    private final OnFetchDataListener dataListener = new OnFetchDataListener() {
         @Override
         public void onFetchData(RetrieveEntry retrieveEntry, String message) {
             if(retrieveEntry == null) {
-                Toast.makeText(getContext(), "No search terms", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 return;
             }
             showData(retrieveEntry);
@@ -101,7 +131,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<CategotyEntry> categotyEntries = new ArrayList<>();
+        List<CategotyEntry> categoryEntries = new ArrayList<>();
         List<Definition> definitions = new ArrayList<>();
 
         List<HeadwordEntry> headwordEntry = retrieveEntry.getResults();
@@ -110,10 +140,10 @@ public class SearchFragment extends Fragment {
             CategotyEntry categotyEntry = new CategotyEntry(l.getText()
                     , l.getLexicalCategory().getText()
                     , l.getEntries().get(0));
-            categotyEntries.add(categotyEntry);
+            categoryEntries.add(categotyEntry);
         }
 
-        for(CategotyEntry c : categotyEntries) {
+        for(CategotyEntry c : categoryEntries) {
             Definition definition = new Definition(c.getCategory()
                     , c.getWord(), c.getEntry()
                     , c.getEntry().getSenses().get(0));
