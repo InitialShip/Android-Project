@@ -8,11 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +19,18 @@ import android.widget.Toast;
 
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.adapters.DefinitionAdapter;
+import com.example.englishdictionary.adapters.PhoneticAdapter;
 import com.example.englishdictionary.dictionaryapi.OnFetchDataListener;
 import com.example.englishdictionary.dictionaryapi.RequestManager;
+import com.example.englishdictionary.dictionaryapi.model.Entry;
 import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.LexicalEntry;
+import com.example.englishdictionary.dictionaryapi.model.PronunciationsList;
+import com.example.englishdictionary.dictionaryapi.model.PronunciationsListInner;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionarylookup.CategotyEntry;
 import com.example.englishdictionary.dictionarylookup.Definition;
+import com.example.englishdictionary.dictionarylookup.Phonetic;
 import com.example.englishdictionary.dictionarylookup.searchsuggests.DataHelper;
 import com.example.englishdictionary.dictionarylookup.searchsuggests.WordSuggest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,9 +41,11 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     AutoCompleteTextView searchView;
-    RecyclerView recyclerView;
+    RecyclerView recycler_list;
+    RecyclerView recycler_phonetic;
     FloatingActionButton btnSearch;
     DefinitionAdapter definitionAdapter;
+    PhoneticAdapter phoneticAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +59,8 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         searchView = (AutoCompleteTextView) view.findViewById(R.id.search_view);
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recycler_list = (RecyclerView) view.findViewById(R.id.list);
+        recycler_phonetic = (RecyclerView) view.findViewById(R.id.phonetic);
         btnSearch = (FloatingActionButton) view.findViewById(R.id.btn_search);
 
         searchView.addTextChangedListener(new TextWatcher() {
@@ -128,14 +133,32 @@ public class SearchFragment extends Fragment {
     };
 
     private void showData(RetrieveEntry retrieveEntry) {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler_phonetic.setHasFixedSize(true);
+        recycler_phonetic.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        recycler_list.setHasFixedSize(true);
+        recycler_list.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<CategotyEntry> categoryEntries = new ArrayList<>();
         List<Definition> definitions = new ArrayList<>();
 
         List<HeadwordEntry> headwordEntry = retrieveEntry.getResults();
         List<LexicalEntry> lexicalEntries = headwordEntry.get(0).getLexicalEntries();
+
+        Entry entry = lexicalEntries.get(0).getEntries().get(0);
+        PronunciationsList pronunciations = entry.getPronunciations();
+
+        List<Phonetic> phonetics = new ArrayList<>();
+        for(int i = 0; i < pronunciations.size(); i++) {
+            Phonetic phonetic = new Phonetic(headwordEntry.get(0).getWord()
+                    , pronunciations.get(i).getPhoneticSpelling()
+                    , pronunciations.get(i).getAudioFile());
+            phonetics.add(phonetic);
+        }
+        //show phonetics
+        phoneticAdapter = new PhoneticAdapter(getContext(), phonetics);
+        recycler_phonetic.setAdapter(phoneticAdapter);
+
         for(LexicalEntry l : lexicalEntries) {
             CategotyEntry categotyEntry = new CategotyEntry(l.getText()
                     , l.getLexicalCategory().getText()
@@ -150,7 +173,8 @@ public class SearchFragment extends Fragment {
             definitions.add(definition);
         }
 
+        //show meanings
         definitionAdapter = new DefinitionAdapter(getContext(), definitions);
-        recyclerView.setAdapter(definitionAdapter);
+        recycler_list.setAdapter(definitionAdapter);
     }
 }
