@@ -12,13 +12,12 @@ import retrofit2.http.Query;
 
 public interface SearchApi {
     @GET("search/{source_lang}")
-    Call<List<Wordlist>> searchSourceLangGet(
+    Call<Wordlist> getSearchSourceLang(
             @Path("source_lang") String sourceLang,
             @Header("app_id") String appId,
             @Header("app_key") String appKey,
-            @Query("q") String q, @Query("prefix") Boolean prefix,
-            @Query("regions") String regions,
-            @Query("limit") String limit,
-            @Query("offset") String offset
+            @Query("q") String q,
+            @Query("prefix") Boolean prefix,
+            @Query("limit") Integer limit
     );
 }
