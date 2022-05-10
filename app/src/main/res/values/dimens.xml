@@ -1,3 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    //nav_setting
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="size">14sp</dimen>
+
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dictionary</string>
+    <string name="nav_header_title">My English Dictionary</string>
+    <string name="nav_search">Dictionary</string>
+    <string name="nav_trans">Translate</string>
+    <string name="search_term">Search word</string>
+    <string name="side_meaning">Meanings</string>
+    <string name="language_1">Language 1</string>
+    <string name="language_2">Language 2</string>
+    <string name="enter_word_hint">Click to enter word</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="setting_theme">Dark theme</string>
+    <string name="general_setting">General</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_version">Version</string>
+    <string name="about_us">About Us</string>
+    <string name="version">1.0</string>
+    <string name="about">About</string>
+</resources>

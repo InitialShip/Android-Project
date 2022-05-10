@@ -1,12 +1,34 @@
 <resources>
-    <string name="app_name">EnglishDictionary</string>
+    <string name="app_name">Dictionary</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">My English Dictionary</string>
+    <string name="hello_blank_fragment">Trống</string>
+    <string name="navigation_drawer_open">Mở thanh điều hướng</string>
+    <string name="navigation_drawer_close">Đóng thanh điều hướng</string>
+    <string name="nav_header_title">Từ điển Tiếng Anh</string>
+
+    //nav
     <string name="nav_search">Tra Cứu</string>
     <string name="nav_trans">Dịch</string>
 
+    //nav_search
     <string name="search_term">Tra từ</string>
+    <string name="side_meaning">Nghĩa của từ</string>
+
+    //nav_trans
+    <string name="language_1">Ngôn ngữ 1</string>
+    <string name="language_2">Ngôn ngữ 2</string>
+    <string name="enter_word_hint">Nhấn để nhập từ</string>
+
+    //nav_setting
+    <string name="setting_theme">Chế độ tối</string>
+    <string name="general_setting">Cài đặt chung</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="setting_version">Phiên bản</string>
+    <string name="version">1.0</string>
+    <string name="about">Thông tin</string>
+    <string name="about_us">Về chúng tôi</string>
+    <string-array name="language_spinner">
+        <item>Tiếng Việt</item>
+        <item>Tiếng Anh</item>
+    </string-array>
 </resources>
