@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.englishdictionary.dictionaryapi.api.EntriesApi;
+import com.example.englishdictionary.dictionaryapi.api.TranslateAPI;
 import com.example.englishdictionary.dictionaryapi.api.SearchApi;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionaryapi.model.Wordlist;
@@ -68,6 +69,38 @@ public class RequestManager {
         }
     }
 
+    public void getTranslate(OnFetchDataListener listener, String sourceLang, String targetLang
+                            , String word) {
+        TranslateAPI translateAPI = retrofit.create(TranslateAPI.class);
+
+        Call<RetrieveEntry> call = translateAPI.getTranslate(sourceLang, targetLang, word, app_id, app_key);
+
+        try {
+            call.enqueue(new Callback<RetrieveEntry>() {
+                @Override
+                public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(context, "Word does not exist", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    listener.onFetchData(response.body(), response.message());
+                }
+
+                public void onFailure(Call<RetrieveEntry> call, Throwable t) {
+                    if (t instanceof IOException) {
+                        listener.onError("Network failure");
+                        t.printStackTrace();
+                    } else {
+                        listener.onError("Conversion issue");
+                        t.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Error Occurred", Toast.LENGTH_SHORT).show();
+        }
+    }
     public void getWordSearch(OnFetchSearchDataListener listener, String query) {
         SearchApi searchApi = retrofit.create(SearchApi.class);
 

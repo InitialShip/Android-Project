@@ -35,7 +35,7 @@ import java.util.Objects;
  */
 public class VariantFormsListInner   {
   @SerializedName("regions")
-  private String[] regions = null;
+  private Object regions = null;
 
   @SerializedName("text")
   private String text = null;
@@ -49,7 +49,7 @@ public class VariantFormsListInner   {
    * A particular area in which the variant form occurs, e.g. 'Great Britain'
    * @return regions
   **/
-  public String[] getRegions() {
+  public Object getRegions() {
     return regions;
   }
 
