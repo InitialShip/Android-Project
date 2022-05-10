@@ -19,4 +19,5 @@
     <string name="about_us">About Us</string>
     <string name="version">1.0</string>
     <string name="about">About</string>
+    <string name="nav_settings">Settings</string>
 </resources>

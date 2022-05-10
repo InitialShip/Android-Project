@@ -47,10 +47,10 @@ public class TranslationsListInner   {
   private CategorizedTextList notes = null;
 
   @SerializedName("regions")
-  private String[] regions = null;
+  private Object regions = null;
 
   @SerializedName("registers")
-  private String[] registers = null;
+  private Object registers = null;
 
   @SerializedName("text")
   private String text = null;
@@ -132,7 +132,7 @@ public class TranslationsListInner   {
    * A particular area in which the translation occurs, e.g. 'Great Britain'
    * @return regions
   **/
-  public String[] getRegions() {
+  public Object getRegions() {
     return regions;
   }
 
@@ -149,7 +149,7 @@ public class TranslationsListInner   {
    * A level of language usage, typically with respect to formality. e.g. 'offensive', 'informal'
    * @return registers
   **/
-  public String[] getRegisters() {
+  public Object getRegisters() {
     return registers;
   }
 

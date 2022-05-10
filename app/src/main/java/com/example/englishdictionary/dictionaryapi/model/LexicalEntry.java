@@ -25,12 +25,11 @@
 
 package com.example.englishdictionary.dictionaryapi.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Description of an entry for a particular part of speech

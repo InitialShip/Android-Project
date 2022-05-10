@@ -9,5 +9,4 @@
     android:padding="10dp"
     android:paddingStart="30dp"
     android:background="@drawable/white_background">
-
 </TextView>

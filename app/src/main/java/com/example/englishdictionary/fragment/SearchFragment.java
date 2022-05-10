@@ -1,5 +1,6 @@
 package com.example.englishdictionary.fragment;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.example.englishdictionary.MainActivity;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.adapters.DefinitionAdapter;
 import com.example.englishdictionary.adapters.PhoneticAdapter;
@@ -26,7 +28,6 @@ import com.example.englishdictionary.dictionaryapi.model.Entry;
 import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.LexicalEntry;
 import com.example.englishdictionary.dictionaryapi.model.PronunciationsList;
-import com.example.englishdictionary.dictionaryapi.model.PronunciationsListInner;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionarylookup.CategotyEntry;
 import com.example.englishdictionary.dictionarylookup.Definition;

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/button_audio_background.xml" value="0.1515" />
+        <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/gray_background.xml" value="0.161" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/search_background.xml" value="0.1515" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/search_icon.xml" value="0.1515" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/side_nav_bar.xml" value="0.1515" />
@@ -11,6 +12,7 @@
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/drawable/white_background.xml" value="0.1515" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/activity_choose_language.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/activity_setting.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/after_translate.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/autocompletesearch_row.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/definiton_row.xml" value="0.25416666666666665" />
@@ -24,6 +26,8 @@
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/layout/setting.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/menu/menu_navigation.xml" value="0.25416666666666665" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/xml/preferences.xml" value="0.25416666666666665" />
+        <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/xml/setting_preferences.xml" value="0.25" />
+        <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/xml/setting_toolbar.xml" value="0.20863616930312098" />
         <entry key="..\:/CongSang's files/Projects/AndroidStudio/Dictionary/LTDD-CS91/app/src/main/res/xml/xml.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/drawable/search_icon.xml" value="0.167" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/drawable/side_nav_bar.xml" value="0.167" />

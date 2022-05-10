@@ -23,12 +23,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/blue"
+                android:background="@color/actionbar"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-
 
         <FrameLayout
             android:id="@+id/content_frame"

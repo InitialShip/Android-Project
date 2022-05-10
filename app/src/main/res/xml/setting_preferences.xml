@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <PreferenceCategory android:title="@string/general_setting">
-        <SwitchPreference android:key="theme_pref"
+        <SwitchPreference
+            android:layout_width="wrap_content"
             android:defaultValue="false"
-            android:title="@string/setting_theme"/>
-        <MultiSelectListPreference
+            android:key="theme_pref"
+            android:title="@string/setting_theme" />
+        <ListPreference
             android:key="choose_lang_pref"
             android:title="@string/setting_language"
-            android:entryValues="@array/language_spinner"/>
+            android:entries="@array/language_spinner"
+            app:defaultValue="true"
+            android:entryValues="@array/language_spinner"
+            android:summary="this is language choose"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about">
@@ -16,7 +23,7 @@
             android:summary="@string/version"/>
         <Preference
             android:key="contact_pref"
-            android:title="@string/setting_language"/>
+            android:title="@string/about_us"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
