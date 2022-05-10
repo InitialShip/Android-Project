@@ -9,5 +9,9 @@
             android:id="@+id/nav_trans"
             android:icon="@drawable/trans_icon"
             android:title="@string/nav_trans" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/settings_black"
+            android:title="@string/settings"/>
     </group>
 </menu>
