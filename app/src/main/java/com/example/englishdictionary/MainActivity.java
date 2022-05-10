@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (check_frag == 1) {
             TransFragment fragment = new TransFragment();
+            currentFragment = FRAGMENT_TRANS;
 
             String choosed_lang = intent.getStringExtra("lang");
             if (choosed_lang != null) {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(fragment);
             navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
         } else {
+            currentFragment = FRAGMENT_SEARCH;
             replaceFragment(new SearchFragment());
             navView.getMenu().findItem(R.id.nav_search).setChecked(true);
         }

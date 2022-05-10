@@ -5,8 +5,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">My English Dictionary</string>
-    <string name="nav_search">Tra Cứu</string>
-    <string name="nav_trans">Dịch</string>
+    <string name="nav_search">Dictionary</string>
+    <string name="nav_trans">Translate</string>
 
-    <string name="search_term">Tra từ</string>
+    <string name="search_term">Search</string>
 </resources>
