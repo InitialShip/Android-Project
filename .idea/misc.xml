@@ -17,9 +17,15 @@
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/activity_choose_language.xml" value="0.12001811594202899" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/activity_setting.xml" value="0.1390625" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/after_translate.xml" value="0.12001811594202899" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/fragment_search.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/fragment_trans.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/language_item.xml" value="0.12360688956433637" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/main_translation.xml" value="0.18697916666666667" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/nav_header_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/sound_exit_buttons.xml" value="0.18697916666666667" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/sub_translation.xml" value="0.18697916666666667" />
+        <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/layout/sub_translation_item.xml" value="0.18697916666666667" />
         <entry key="..\:/Programming/AndroidStudio/Projects/EnglishDictionary/app/src/main/res/menu/menu_navigation.xml" value="0.25416666666666665" />
       </map>
     </option>

@@ -80,10 +80,15 @@ public class RequestManager {
                 @Override
                 public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
                     if (!response.isSuccessful()) {
-                        Toast.makeText(context, "Word does not exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "No available translation", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    listener.onFetchData(response.body(), response.message());
+                    try {
+                        listener.onFetchData(response.body(), response.message());
+                    }
+                    catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 public void onFailure(Call<RetrieveEntry> call, Throwable t) {
