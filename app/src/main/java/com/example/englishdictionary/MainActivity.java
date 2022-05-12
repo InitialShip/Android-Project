@@ -9,25 +9,36 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
+import com.example.englishdictionary.settings.LanguageConfig;
+import com.example.englishdictionary.settings.datalocal.MySharePreferences;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
-    private static final int SETTINGS_ACTIVITY = 2;
 
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
     private NavigationView navView;
+    MySharePreferences sharePrefs;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        sharePrefs = new MySharePreferences(newBase);
+        String languageCode = sharePrefs.getValueKey("locale");
+        Context context = LanguageConfig.changeLanguage(newBase, languageCode);
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle(R.string.nav_search);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -83,12 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    @Override
-//    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        toggle.syncState();
-//    }
-
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -104,15 +110,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.nav_search) {
             if(currentFragment != FRAGMENT_SEARCH) {
                 replaceFragment(new SearchFragment());
+                getSupportActionBar().setTitle(R.string.nav_search);
                 currentFragment = FRAGMENT_SEARCH;
             }
         } else if (id == R.id.nav_trans) {
             replaceFragment(new TransFragment());
+            getSupportActionBar().setTitle(R.string.nav_trans);
             currentFragment = FRAGMENT_TRANS;
         } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-
-            intent.putExtra("last_fragment", currentFragment);
             startActivity(intent);
         }
 

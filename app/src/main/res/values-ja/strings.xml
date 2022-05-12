@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dictionary</string>
+    <string name="hello_blank_fragment">ドラム</string>
+    <string name="navigation_drawer_open">ナビゲーションバーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションバーを閉じる</string>
+    <string name="nav_header_title">英語辞典</string>
+
+    //nav
+    <string name="nav_search">探す</string>
+    <string name="nav_trans">パンデミック</string>
+    <string name="nav_settings">設定</string>
+
+    //nav_search
+    <string name="search_term">単語を調べる</string>
+    <string name="side_meaning">言葉の意味</string>
+    <string name="todo">TODO</string>
+
+    //nav_trans
+    <string name="language_1">言語1</string>
+    <string name="language_2">言語2</string>
+    <string name="enter_word_hint">タップして単語を入力</string>
+
+    //nav_setting
+    <string name="setting_theme">ダークモード</string>
+    <string name="general_setting">一般設定</string>
+    <string name="setting_language">言語</string>
+    <string name="setting_version">バージョン</string>
+    <string name="version">1.0</string>
+    <string name="about">情報</string>
+    <string name="about_us">私たちに関しては</string>
+    <string name="language_vn">ベトナム語</string>
+    <string name="language_en">英語</string>
+</resources>

@@ -2,6 +2,8 @@ package com.example.englishdictionary;
 
 import android.app.Application;
 
+import com.example.englishdictionary.settings.datalocal.DataLocalManager;
+
 public class MyApplication extends Application {
     private static String current_source = "en";
     private static String current_target = "es";
@@ -20,5 +22,11 @@ public class MyApplication extends Application {
 
     public static void setCurrent_target(String current_target) {
         MyApplication.current_target = current_target;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        DataLocalManager.init(getApplicationContext());
     }
 }

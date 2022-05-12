@@ -13,8 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:background="@color/white">
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/category"
@@ -22,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:textColor="@color/black"
             android:textStyle="italic"
             tools:text="(noun)" />
 
@@ -33,7 +31,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@id/category"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/word"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:text="Sausage" />
@@ -44,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/word"
             android:layout_marginTop="8dp"
-            android:textColor="@color/dark_gray"
             android:textStyle="italic"
             tools:text="Old English, I think" />
 
@@ -54,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/etymology"
             android:layout_marginTop="8dp"
-            android:textColor="@color/blue"
+            android:textColor="@color/word"
             tools:text="Tasty when fried for breakfast" />
 
     </RelativeLayout>

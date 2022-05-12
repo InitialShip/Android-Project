@@ -3,103 +3,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue"
-    android:orientation="vertical"
-    tools:context=".fragment.TransFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.TransFragment"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
-
+        app:cardElevation="8dp">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/gray_background">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_source"
-                android:layout_width="155dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/gray_background"
-                android:drawableEnd="@drawable/arrow_drop_down"
-                android:paddingEnd="20dp"
-                android:text="Language 1"
-                android:textAlignment="textEnd"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/gray_background"
-                android:drawableStart="@drawable/arrow_forward_white"
-                android:paddingStart="20dp"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_target"
-                android:layout_width="155dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/gray_background"
-                android:drawableEnd="@drawable/arrow_drop_down"
-                android:paddingEnd="20dp"
-                android:text="Language 2"
-                android:textAlignment="textEnd"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <ViewStub
-                android:id="@+id/stub_sound_exit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inflatedId="@+id/sub_tree"
-                android:layout="@layout/sound_exit_buttons" />
-
-            <EditText
-                android:id="@+id/source_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="Click to enter text"
-                android:inputType="text"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/phonetic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:text="phonetic"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <ViewStub
-            android:id="@+id/main_translation_stub"
-            android:layout_width="match_parent"
-            android:inflatedId="@+id/sub_tree"
-            android:layout_height="wrap_content"
-            android:layout="@layout/main_translation"
-            android:layout_marginTop="20dp"/>
-
-        <ViewStub
-            android:id="@+id/sub_translation_stub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inflatedId="@+id/sub_tree"
-            android:layout="@layout/sub_translation"
-            android:layout_marginTop="20dp"/>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/gray_background">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_source"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_background"
+                    android:drawableEnd="@drawable/arrow_drop_down"
+                    android:paddingEnd="20dp"
+                    android:text="@string/language_1"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_background"
+                    android:drawableStart="@drawable/arrow_forward_white"
+                    android:paddingStart="20dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_target"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gray_background"
+                    android:drawableEnd="@drawable/arrow_drop_down"
+                    android:paddingEnd="25dp"
+                    android:text="@string/language_2"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="vertical">
+
+                <ViewStub
+                    android:id="@+id/stub_sound_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inflatedId="@+id/sub_tree"
+                    android:layout="@layout/sound_exit_buttons" />
+
+                <EditText
+                    android:id="@+id/source_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/enter_word_hint"
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:paddingTop="10dp"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/phonetic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:text="phonetic"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ViewStub
+                android:id="@+id/main_translation_stub"
+                android:layout_width="match_parent"
+                android:inflatedId="@+id/sub_tree"
+                android:layout_height="wrap_content"
+                android:layout="@layout/main_translation"
+                android:layout_marginTop="20dp"/>
+
+            <ViewStub
+                android:id="@+id/sub_translation_stub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inflatedId="@+id/sub_tree"
+                android:layout="@layout/sub_translation"
+                android:layout_marginTop="20dp"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.core.widget.NestedScrollView>
