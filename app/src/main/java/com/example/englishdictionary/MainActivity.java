@@ -9,25 +9,36 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
+import com.example.englishdictionary.settings.LanguageConfig;
+import com.example.englishdictionary.settings.datalocal.MySharePreferences;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
-    private static final int SETTINGS_ACTIVITY = 2;
 
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
     private NavigationView navView;
+    MySharePreferences sharePrefs;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        sharePrefs = new MySharePreferences(newBase);
+        String languageCode = sharePrefs.getValueKey("locale");
+        Context context = LanguageConfig.changeLanguage(newBase, languageCode);
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +94,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navView.getMenu().findItem(R.id.nav_search).setChecked(true);
         }
     }
-
-//    @Override
-//    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        toggle.syncState();
-//    }
 
     @Override
     public void onBackPressed() {

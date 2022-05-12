@@ -2,28 +2,29 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/general_setting">
+    <PreferenceCategory
+        android:title="@string/general_setting">
         <SwitchPreference
-            android:layout_width="wrap_content"
             android:defaultValue="false"
-            android:key="theme_pref"
+            android:key="theme"
             android:title="@string/setting_theme" />
         <ListPreference
-            android:key="choose_lang_pref"
-            android:title="@string/setting_language"
             android:entries="@array/language_spinner"
-            app:defaultValue="true"
             android:entryValues="@array/language_spinner"
-            android:summary="this is language choose"/>
+            android:key="locale"
+            android:title="@string/setting_language"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/about">
-        <Preference android:key="version_pref"
-            android:title="@string/setting_version"
-            android:summary="@string/version"/>
+    <PreferenceCategory
+        android:title="@string/about">
         <Preference
-            android:key="contact_pref"
-            android:title="@string/about_us"/>
+            android:key="version"
+            android:summary="@string/version"
+            android:title="@string/setting_version" />
+        <Preference
+            android:key="contact"
+            android:title="@string/about_us" />
     </PreferenceCategory>
 
 </PreferenceScreen>

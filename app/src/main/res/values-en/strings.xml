@@ -20,4 +20,7 @@
     <string name="version">1.0</string>
     <string name="about">About</string>
     <string name="nav_settings">Settings</string>
+    <string name="todo">TODO</string>
+    <string name="language_vn">Vietnamese</string>
+    <string name="language_en">English</string>
 </resources>
