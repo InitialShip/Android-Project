@@ -83,7 +83,11 @@ public class SearchFragment extends Fragment {
         });
 
         RequestManager requestManager = new RequestManager(getContext());
-        requestManager.getWordMeaning(dataListener, "hello");
+        try {
+            requestManager.getWordMeaning(dataListener, "hello");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +133,6 @@ public class SearchFragment extends Fragment {
 
         @Override
         public void onError(String message) {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         }
     };
 

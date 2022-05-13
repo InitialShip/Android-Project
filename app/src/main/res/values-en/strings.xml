@@ -23,4 +23,6 @@
     <string name="todo">TODO</string>
     <string name="language_vn">Vietnamese</string>
     <string name="language_en">English</string>
+    <string name="On_theme">On</string>
+    <string name="Off_theme">Off</string>
 </resources>

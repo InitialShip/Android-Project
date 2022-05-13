@@ -17,12 +17,21 @@ public class MySharePreferences {
         this.preferences = this.context.getSharedPreferences(database_name, Context.MODE_PRIVATE);
     }
 
-    public String getValueKey(String key) {
+    public String getStringValue(String key) {
         return preferences.getString(key, "");
     }
 
-    public void setValueKey(String key, String value) {
+    public void setStringValue(String key, String value) {
         editor.putString(key, value);
+        editor.apply();
+    }
+
+    public boolean getBooleanValue(String key) {
+        return preferences.getBoolean(key, true);
+    }
+
+    public void setBooleanValue(String key, boolean value) {
+        editor.putBoolean(key, value);
         editor.apply();
     }
 }

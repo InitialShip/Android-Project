@@ -17,12 +17,20 @@ public class DataLocalManager {
         return instance;
     }
 
-    public static void setPrefs(String key, String value) {
-        DataLocalManager.getInstance().mySharePreferences.setValueKey(key, value);
+    public static void setStringPrefs(String key, String value) {
+        DataLocalManager.getInstance().mySharePreferences.setStringValue(key, value);
     }
 
-    public static String getPrefs(String key) {
-        return DataLocalManager.getInstance().mySharePreferences.getValueKey(key);
+    public static String getStringPrefs(String key) {
+        return DataLocalManager.getInstance().mySharePreferences.getStringValue(key);
+    }
+
+    public static void setBooleanPrefs(String key, boolean value) {
+        DataLocalManager.getInstance().mySharePreferences.setBooleanValue(key, value);
+    }
+
+    public static boolean getBooleanPrefs(String key) {
+        return DataLocalManager.getInstance().mySharePreferences.getBooleanValue(key);
     }
 
 }

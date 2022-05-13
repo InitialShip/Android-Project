@@ -1,6 +1,8 @@
 package com.example.englishdictionary.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +11,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
+import com.example.englishdictionary.MainActivity;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.settings.datalocal.DataLocalManager;
 
@@ -16,32 +19,80 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String LOCALE_KEY = "locale";
     public static final String THEME_KEY = "theme";
 
+    SwitchPreference change_theme;
+    ListPreference change_lang;
+
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.setting_preferences);
-        
-        ListPreference change_lang = (ListPreference) findPreference(LOCALE_KEY);
-        assert change_lang != null;
-        if(DataLocalManager.getPrefs(LOCALE_KEY).equals("vi"))
-            change_lang.setSummary("Vietnamese");
-        else if(DataLocalManager.getPrefs(LOCALE_KEY).equals("en"))
-            change_lang.setSummary("English");
-        else if(DataLocalManager.getPrefs(LOCALE_KEY).equals("ja"))
-            change_lang.setSummary("Japanese");
-        else
-            change_lang.setSummary("Vietnamese");
-        change_lang.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+        change_theme = (SwitchPreference) findPreference(THEME_KEY);
+        assert change_theme != null;
+        change_theme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                if(newValue.toString().equals("Vietnamese")) {
-                    DataLocalManager.setPrefs(LOCALE_KEY, "vi");
-                } else if (newValue.toString().equals("English")) {
-                    DataLocalManager.setPrefs(LOCALE_KEY, "en");
-                } else if(newValue.toString().equals("Japanese"))
-                    DataLocalManager.setPrefs(LOCALE_KEY, "ja");
-                change_lang.setSummary(newValue.toString());
+                boolean isChecked = (boolean) newValue;
+                if(isChecked) {
+                    enableChangeDarkTheme();
+                    reStart();
+                } else if(!isChecked){
+                    disableChangeDarkTheme();
+                    reStart();
+                }
                 return true;
             }
         });
+
+        change_lang = (ListPreference) findPreference(LOCALE_KEY);
+        assert change_lang != null;
+        switch (DataLocalManager.getStringPrefs(LOCALE_KEY)) {
+            case "vi":
+                change_lang.setSummary("Vietnamese");
+                break;
+            case "en":
+                change_lang.setSummary("English");
+                break;
+            case "ja":
+                change_lang.setSummary("Japanese");
+                break;
+        }
+        change_lang.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                changeLanguage(newValue);
+                change_lang.setSummary(newValue.toString());
+                reStart();
+                return true;
+            }
+        });
+    }
+
+    private void changeLanguage(Object value) {
+        if(value.toString().equals("Vietnamese")) {
+            DataLocalManager.setStringPrefs(LOCALE_KEY, "vi");
+        } else if (value.toString().equals("English")) {
+            DataLocalManager.setStringPrefs(LOCALE_KEY, "en");
+        } else if(value.toString().equals("Japanese"))
+            DataLocalManager.setStringPrefs(LOCALE_KEY, "ja");
+    }
+
+    private void enableChangeDarkTheme() {
+        DataLocalManager.setBooleanPrefs(THEME_KEY, true);
+    }
+
+    private void disableChangeDarkTheme() {
+        DataLocalManager.setBooleanPrefs(THEME_KEY, false);
+    }
+
+    private void reStart() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }, 1000);
     }
 }

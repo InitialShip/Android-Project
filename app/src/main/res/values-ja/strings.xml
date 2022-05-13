@@ -31,4 +31,6 @@
     <string name="about_us">私たちに関しては</string>
     <string name="language_vn">ベトナム語</string>
     <string name="language_en">英語</string>
+    <string name="On_theme">オンにする</string>
+    <string name="Off_theme">消す</string>
 </resources>

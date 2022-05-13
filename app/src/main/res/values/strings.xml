@@ -31,5 +31,7 @@
     <string name="about_us">Về chúng tôi</string>
     <string name="language_vn">Tiếng Việt</string>
     <string name="language_en">Tiếng Anh</string>
+    <string name="On_theme">Bật</string>
+    <string name="Off_theme">Tắt</string>
 
 </resources>
