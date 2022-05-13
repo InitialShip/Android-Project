@@ -3,6 +3,7 @@ package com.example.englishdictionary;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,13 +12,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
 import com.example.englishdictionary.settings.LanguageConfig;
-import com.example.englishdictionary.settings.datalocal.MySharePreferences;
+import com.example.englishdictionary.settings.datalocal.DataLocalManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -30,12 +32,12 @@ public class MainActivity extends AppCompatActivity implements
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
     private NavigationView navView;
-    MySharePreferences sharePrefs;
+    public static final String LOCALE_KEY = "locale";
+    public static final String THEME_KEY = "theme";
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        sharePrefs = new MySharePreferences(newBase);
-        String languageCode = sharePrefs.getValueKey("locale");
+        String languageCode = DataLocalManager.getStringPrefs(LOCALE_KEY);
         Context context = LanguageConfig.changeLanguage(newBase, languageCode);
         super.attachBaseContext(context);
     }
@@ -45,10 +47,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        changeTheme();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle(R.string.nav_search);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -67,6 +69,14 @@ public class MainActivity extends AppCompatActivity implements
         navView =  findViewById(R.id.navigation_view);
         navView.setNavigationItemSelectedListener(this);
         checkFragment();
+    }
+
+    private void changeTheme() {
+        if (DataLocalManager.getBooleanPrefs(THEME_KEY)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if(!DataLocalManager.getBooleanPrefs(THEME_KEY))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
     }
 
     void checkFragment() {
