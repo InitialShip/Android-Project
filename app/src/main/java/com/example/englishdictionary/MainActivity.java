@@ -158,4 +158,13 @@ public class MainActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (currentFragment == 1)
+            navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
+        else
+            navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+    }
 }
