@@ -1,7 +1,11 @@
 package com.example.englishdictionary.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -34,6 +38,8 @@ import com.example.englishdictionary.dictionaryapi.RequestManager;
 import com.example.englishdictionary.dictionaryapi.model.Entry;
 import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.LexicalEntry;
+import com.example.englishdictionary.dictionaryapi.model.PronunciationsList;
+import com.example.englishdictionary.dictionaryapi.model.PronunciationsListInner;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionaryapi.model.Sense;
 import com.example.englishdictionary.dictionaryapi.model.TranslationsList;
@@ -49,10 +55,10 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 public class TransFragment extends Fragment {
-    Button btn_source, btn_target, btn_sound, btn_cancel_trans;
+    Button btn_source, btn_target, btn_sound, btn_cancel_trans, btn_copy;
     EditText source_text;
     ViewStub sound_exit_stub, main_translation_stub, sub_translation_stub;
-    TextView translation_content, target_lang_trans;
+    TextView translation_content, target_lang_trans, phonetic;
     ListView sub_translation_list;
     int TRANSLATION_STATUS = 0;
 
@@ -85,6 +91,7 @@ public class TransFragment extends Fragment {
         btn_target = (Button) view.findViewById(R.id.btn_target);
         source_text = (EditText) view.findViewById(R.id.source_text);
         source_text.setImeOptions(EditorInfo.IME_ACTION_GO);
+
         sound_exit_stub = view.findViewById(R.id.stub_sound_exit);
         main_translation_stub = view.findViewById(R.id.main_translation_stub);
         sub_translation_stub = view.findViewById(R.id.sub_translation_stub);
@@ -179,19 +186,27 @@ public class TransFragment extends Fragment {
         main_translation_stub.setVisibility(View.VISIBLE);
         sub_translation_stub.setVisibility(View.VISIBLE);
 
+        phonetic = view.findViewById(R.id.phonetic);
         btn_sound = (Button) view.findViewById(R.id.btn_sound);
         btn_cancel_trans = (Button) view.findViewById(R.id.btn_cancel_trans);
         translation_content = view.findViewById(R.id.translation_content);
         target_lang_trans = view.findViewById(R.id.target_lang_trans);
         sub_translation_list = view.findViewById(R.id.list_sub_translation);
+        btn_copy = view.findViewById(R.id.btn_copy);
 
         btn_cancel_trans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 source_text.setText(null);
+                translation_content.setText(null);
+                sub_translation_list.setAdapter(null);
+                target_lang_trans.setText(null);
+                setListViewHeightBasedOnItems(sub_translation_list);
                 sound_exit_stub.setVisibility(View.GONE);
                 main_translation_stub.setVisibility(View.GONE);
                 sub_translation_stub.setVisibility(View.GONE);
+                phonetic.setText(null);
+                btn_sound.setOnClickListener(null);
             }
         });
 
@@ -199,6 +214,17 @@ public class TransFragment extends Fragment {
         RequestManager requestManager = new RequestManager(getContext());
         requestManager.getTranslate(listener,MyApplication.getCurrent_source()
                 ,MyApplication.getCurrent_target(), source_text.getText().toString());
+
+        btn_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("translation", translation_content.getText());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(getContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private final OnFetchDataListener listener = new OnFetchDataListener() {
@@ -219,7 +245,6 @@ public class TransFragment extends Fragment {
 
     void showData(RetrieveEntry retrieveEntry) {
         List<CategotyEntry> categotyEntries = new ArrayList<>();
-        List<Translation> translations = new ArrayList<>();
 
         List<String> sub_trans = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext()
@@ -228,6 +253,7 @@ public class TransFragment extends Fragment {
         List<HeadwordEntry> headwordEntry = retrieveEntry.getResults();
         LexicalEntry lexicalEntries = headwordEntry.get(0).getLexicalEntries().get(0);
         Entry entry = lexicalEntries.getEntries().get(0);
+        PronunciationsListInner pronunciation = entry.getPronunciations().get(0);
         List<Sense> senses = entry.getSenses();
         TranslationsList translationsList = new TranslationsList();
 
@@ -267,6 +293,27 @@ public class TransFragment extends Fragment {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if(pronunciation != null) {
+          phonetic.setText(pronunciation.getPhoneticSpelling());
+
+          btn_sound.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  try {
+                      MediaPlayer player = new MediaPlayer();
+                      player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                      player.setDataSource(pronunciation.getAudioFile());
+                      player.prepare();
+                      player.start();
+
+                  } catch (Exception e) {
+                      Toast.makeText(getContext(), "No available audio for this word"
+                              , Toast.LENGTH_SHORT).show();
+                  }
+              }
+          });
         }
     }
 
