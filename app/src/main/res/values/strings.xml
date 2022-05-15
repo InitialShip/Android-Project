@@ -33,5 +33,6 @@
     <string name="language_en">Tiếng Anh</string>
     <string name="On_theme">Bật</string>
     <string name="Off_theme">Tắt</string>
+    <string name="alternative_translation">Bản dịch thay thế</string>
 
 </resources>

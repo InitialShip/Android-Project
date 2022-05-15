@@ -33,4 +33,5 @@
     <string name="language_en">英語</string>
     <string name="On_theme">オンにする</string>
     <string name="Off_theme">消す</string>
+    <string name="alternative_translation">代替翻訳</string>
 </resources>

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements
     private NavigationView navView;
     public static final String LOCALE_KEY = "locale";
     public static final String THEME_KEY = "theme";
+    public static final String FRAGMENT_KEY = "fragment";
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements
             System.out.print(e.getMessage());
         }
 
-        navView =  findViewById(R.id.navigation_view);
+        navView = findViewById(R.id.navigation_view);
         navView.setNavigationItemSelectedListener(this);
         checkFragment();
     }

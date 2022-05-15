@@ -23,7 +23,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_source"
-                    android:layout_width="170dp"
+                    android:layout_width="171dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
                     android:drawableEnd="@drawable/arrow_drop_down"
@@ -33,7 +33,7 @@
                     android:textColor="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="70dp"
+                    android:layout_width="69dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
                     android:drawableStart="@drawable/arrow_forward_white"
@@ -41,7 +41,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_target"
-                    android:layout_width="170dp"
+                    android:layout_width="171dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
                     android:drawableEnd="@drawable/arrow_drop_down"
