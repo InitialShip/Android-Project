@@ -33,20 +33,7 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         lv_languages.setAdapter(languageAdapter);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChooseLanguageActivity.this, MainActivity.class);
-
-                intent.putExtra("check_frag",1);
-                startActivity(intent);
-            }
+            public void onClick(View view) { onBackPressed(); }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ChooseLanguageActivity.this, MainActivity.class);
-
-        intent.putExtra("check_frag",1);
-        startActivity(intent);
     }
 }
