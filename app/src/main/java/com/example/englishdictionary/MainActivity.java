@@ -91,10 +91,26 @@ public class MainActivity extends AppCompatActivity implements
 
             String choosed_lang = intent.getStringExtra("lang");
             if (choosed_lang != null) {
-                if (check_btn == 1)
-                    MyApplication.setCurrent_target(choosed_lang);
-                else
-                    MyApplication.setCurrent_source(choosed_lang);
+                if (check_btn == 1) {
+                    if (choosed_lang.equals(MyApplication.getCurrent_source())) {
+                        String temp;
+                        temp = MyApplication.getCurrent_target();
+                        MyApplication.setCurrent_target(MyApplication.getCurrent_source());
+                        MyApplication.setCurrent_source(temp);
+                    }
+                    else
+                        MyApplication.setCurrent_target(choosed_lang);
+                }
+                else {
+                    if (choosed_lang.equals(MyApplication.getCurrent_target())) {
+                        String temp;
+                        temp = MyApplication.getCurrent_source();
+                        MyApplication.setCurrent_source(MyApplication.getCurrent_target());
+                        MyApplication.setCurrent_target(temp);
+                    }
+                    else
+                        MyApplication.setCurrent_source(choosed_lang);
+                }
 
             }
             replaceFragment(fragment);

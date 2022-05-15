@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:elevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,16 +17,16 @@
             android:layout_gravity="start"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
-            android:text="English"
             android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_copy"
+            android:layout_width="49dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="125dp"
             android:background="@drawable/white_background"
-            android:drawableEnd="@drawable/content_copy_black" />
+            android:paddingStart="15dp"
+            android:drawableStart="@drawable/content_copy_black" />
 
     </LinearLayout>
 
@@ -33,6 +36,7 @@
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:padding="20dp"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"/>
 
 </androidx.cardview.widget.CardView>
