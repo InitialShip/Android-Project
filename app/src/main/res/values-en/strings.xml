@@ -25,4 +25,5 @@
     <string name="language_en">English</string>
     <string name="On_theme">On</string>
     <string name="Off_theme">Off</string>
+    <string name="alternative_translation">Alternative translation</string>
 </resources>

@@ -34,4 +34,13 @@ public class MySharePreferences {
         editor.putBoolean(key, value);
         editor.apply();
     }
+
+    public int getIntValue(String key) {
+        return preferences.getInt(key, 1);
+    }
+
+    public void setIntValue(String key, int value) {
+        editor.putInt(key, value);
+        editor.apply();
+    }
 }

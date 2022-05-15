@@ -12,7 +12,7 @@
         android:layout_gravity="start"
         android:paddingStart="20dp"
         android:paddingBottom="10dp"
-        android:text="Alternative translation"
+        android:text="@string/alternative_translation"
         android:textSize="20sp" />
 
     <ListView

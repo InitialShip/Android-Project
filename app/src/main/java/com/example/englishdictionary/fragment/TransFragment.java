@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.TransitionInflater;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -54,6 +55,16 @@ public class TransFragment extends Fragment {
     TextView translation_content, target_lang_trans;
     ListView sub_translation_list;
     int TRANSLATION_STATUS = 0;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TransitionInflater out = TransitionInflater.from(requireContext());
+        setExitTransition(out.inflateTransition(R.transition.fade));
+
+        TransitionInflater in = TransitionInflater.from(requireContext());
+        setEnterTransition(in.inflateTransition(R.transition.slide_right));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

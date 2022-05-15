@@ -33,4 +33,12 @@ public class DataLocalManager {
         return DataLocalManager.getInstance().mySharePreferences.getBooleanValue(key);
     }
 
+    public static void setIntPrefs(String key, int value) {
+        DataLocalManager.getInstance().mySharePreferences.setIntValue(key, value);
+    }
+
+    public static int getIntPrefs(String key) {
+        return DataLocalManager.getInstance().mySharePreferences.getIntValue(key);
+    }
+
 }

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.TransitionInflater;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,6 +48,16 @@ public class SearchFragment extends Fragment {
     FloatingActionButton btnSearch;
     DefinitionAdapter definitionAdapter;
     PhoneticAdapter phoneticAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TransitionInflater out = TransitionInflater.from(requireContext());
+        setExitTransition(out.inflateTransition(R.transition.fade));
+
+        TransitionInflater in = TransitionInflater.from(requireContext());
+        setEnterTransition(in.inflateTransition(R.transition.slide_right));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
