@@ -9,11 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.example.englishdictionary.MainActivity;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.settings.datalocal.DataLocalManager;
+
+import java.util.Objects;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String LOCALE_KEY = "locale";
@@ -21,6 +24,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     SwitchPreference change_theme;
     ListPreference change_lang;
+    Preference contact_us;
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
@@ -56,11 +60,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 change_lang.setSummary("Japanese");
                 break;
         }
+
         change_lang.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 changeLanguage(newValue);
-                change_lang.setSummary(newValue.toString());
                 reStart();
                 return true;
             }
@@ -68,12 +72,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void changeLanguage(Object value) {
-        if(value.toString().equals("Vietnamese")) {
-            DataLocalManager.setStringPrefs(LOCALE_KEY, "vi");
-        } else if (value.toString().equals("English")) {
-            DataLocalManager.setStringPrefs(LOCALE_KEY, "en");
-        } else if(value.toString().equals("Japanese"))
-            DataLocalManager.setStringPrefs(LOCALE_KEY, "ja");
+        DataLocalManager.setStringPrefs(LOCALE_KEY, value.toString());
     }
 
     private void enableChangeDarkTheme() {
