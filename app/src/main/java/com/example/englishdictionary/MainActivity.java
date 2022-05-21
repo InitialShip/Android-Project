@@ -3,24 +3,27 @@ package com.example.englishdictionary;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
-import com.example.englishdictionary.oxford.DictionaryRequest;
+import com.example.englishdictionary.settings.LanguageConfig;
+import com.example.englishdictionary.settings.datalocal.DataLocalManager;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
@@ -28,18 +31,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
     private DrawerLayout mDrawerLayout;
+    private NavigationView navView;
+    public static final String LOCALE_KEY = "locale";
+    public static final String THEME_KEY = "theme";
+    public static final String FRAGMENT_KEY = "fragment";
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String languageCode = DataLocalManager.getStringPrefs(LOCALE_KEY);
+        Context context = LanguageConfig.changeLanguage(newBase, languageCode);
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        changeTheme();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle(R.string.nav_search);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -54,29 +67,60 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.print(e.getMessage());
         }
 
-        NavigationView navView =  findViewById(R.id.navigation_view);
+        navView = findViewById(R.id.navigation_view);
         navView.setNavigationItemSelectedListener(this);
-        replaceFragment(new SearchFragment());
-        navView.getMenu().findItem(R.id.nav_search).setChecked(true);
-
-        new DictionaryRequest().execute(dictionaryEntries());//Test
-
-    }
-    private String dictionaryEntries() {
-        final String language = "en-gb";
-        final String word = "Ace";
-        final String fields = "pronunciations";
-        final String strictMatch = "false";
-        final String word_id = word.toLowerCase();
-        return "https://od-api.oxforddictionaries.com:443/api/v2/entries/" + language + "/" + word_id + "?" + "fields=" + fields + "&strictMatch=" + strictMatch;
+        checkFragment();
     }
 
+    private void changeTheme() {
+        if (DataLocalManager.getBooleanPrefs(THEME_KEY)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if(!DataLocalManager.getBooleanPrefs(THEME_KEY))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-//    @Override
-//    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        toggle.syncState();
-//    }
+    }
+
+    void checkFragment() {
+        Intent intent = getIntent();
+        int check_frag = intent.getIntExtra("check_frag", 0);
+        int check_btn = intent.getIntExtra("check_btn", 0);
+
+        if (check_frag == 1) {
+            TransFragment fragment = new TransFragment();
+            currentFragment = FRAGMENT_TRANS;
+
+            String choosed_lang = intent.getStringExtra("lang");
+            if (choosed_lang != null) {
+                if (check_btn == 1) {
+                    if (choosed_lang.equals(MyApplication.getCurrent_source())) {
+                        String temp;
+                        temp = MyApplication.getCurrent_target();
+                        MyApplication.setCurrent_target(MyApplication.getCurrent_source());
+                        MyApplication.setCurrent_source(temp);
+                    }
+                    else
+                        MyApplication.setCurrent_target(choosed_lang);
+                }
+                else {
+                    if (choosed_lang.equals(MyApplication.getCurrent_target())) {
+                        String temp;
+                        temp = MyApplication.getCurrent_source();
+                        MyApplication.setCurrent_source(MyApplication.getCurrent_target());
+                        MyApplication.setCurrent_target(temp);
+                    }
+                    else
+                        MyApplication.setCurrent_source(choosed_lang);
+                }
+
+            }
+            replaceFragment(fragment);
+            navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
+        } else {
+            currentFragment = FRAGMENT_SEARCH;
+            replaceFragment(new SearchFragment());
+            navView.getMenu().findItem(R.id.nav_search).setChecked(true);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -93,11 +137,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.nav_search) {
             if(currentFragment != FRAGMENT_SEARCH) {
                 replaceFragment(new SearchFragment());
+                getSupportActionBar().setTitle(R.string.nav_search);
                 currentFragment = FRAGMENT_SEARCH;
             }
         } else if (id == R.id.nav_trans) {
             replaceFragment(new TransFragment());
+            getSupportActionBar().setTitle(R.string.nav_trans);
             currentFragment = FRAGMENT_TRANS;
+        } else if (id == R.id.nav_setting) {
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -108,5 +157,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (currentFragment == 1)
+            navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
+        else
+            navView.getMenu().findItem(R.id.nav_search).setChecked(true);
     }
 }
