@@ -1,15 +1,20 @@
 package com.example.englishdictionary.dictionaryapi;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.englishdictionary.MyApplication;
 import com.example.englishdictionary.dictionaryapi.api.EntriesApi;
+import com.example.englishdictionary.dictionaryapi.api.SearchTranslateAPI;
 import com.example.englishdictionary.dictionaryapi.api.TranslateAPI;
 import com.example.englishdictionary.dictionaryapi.api.SearchApi;
+import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionaryapi.model.Wordlist;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,22 +74,63 @@ public class RequestManager {
         }
     }
 
+//    public void get
+
     public void getTranslate(OnFetchDataListener listener, String sourceLang, String targetLang
                             , String word) {
-        TranslateAPI translateAPI = retrofit.create(TranslateAPI.class);
-
-        Call<RetrieveEntry> call = translateAPI.getTranslate(sourceLang, targetLang, word, app_id, app_key);
+        List<String> expected_word = new ArrayList<>();
+        SearchTranslateAPI searchTranslateAPI = retrofit.create(SearchTranslateAPI.class);
+        Call<RetrieveEntry> call_search = searchTranslateAPI.getSearchTranslate(sourceLang
+                , targetLang, word, app_id, app_key, 5);
 
         try {
-            call.enqueue(new Callback<RetrieveEntry>() {
+            call_search.enqueue(new Callback<RetrieveEntry>() {
                 @Override
                 public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
                     if (!response.isSuccessful()) {
-                        Toast.makeText(context, "No available translation", Toast.LENGTH_SHORT).show();
+                        Log.v("ExpectedWord:", "0");
                         return;
                     }
                     try {
-                        listener.onFetchData(response.body(), response.message());
+                        List<HeadwordEntry> headwordEntries = response.body().getResults();
+                        for (HeadwordEntry h : headwordEntries)
+                            expected_word.add(h.getWord());
+
+                        TranslateAPI translateAPI = retrofit.create(TranslateAPI.class);
+                        if(expected_word.size() < 1)
+                            expected_word.add(word);
+                        Call<RetrieveEntry> call_trans = translateAPI.getTranslate(sourceLang, targetLang, expected_word.get(0), app_id, app_key);
+                        try {
+                            call_trans.enqueue(new Callback<RetrieveEntry>() {
+                                @Override
+                                public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
+                                    if (!response.isSuccessful()) {
+                                        Toast.makeText(context, "No available translation", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    try {
+                                        listener.onFetchData(response.body(), response.message());
+                                    }
+                                    catch (NullPointerException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                public void onFailure(Call<RetrieveEntry> call, Throwable t) {
+                                    if (t instanceof IOException) {
+                                        listener.onError("Network failure");
+                                        t.printStackTrace();
+                                    } else {
+                                        listener.onError("Conversion issue");
+                                        t.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context, "Error Occurred", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                     catch (NullPointerException e) {
                         e.printStackTrace();
@@ -105,7 +151,9 @@ public class RequestManager {
             e.printStackTrace();
             Toast.makeText(context, "Error Occurred", Toast.LENGTH_SHORT).show();
         }
+
     }
+
     public void getWordSearch(OnFetchSearchDataListener listener, String query) {
         SearchApi searchApi = retrofit.create(SearchApi.class);
 

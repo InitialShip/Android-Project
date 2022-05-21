@@ -20,6 +20,7 @@ import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
 import com.example.englishdictionary.settings.LanguageConfig;
 import com.example.englishdictionary.settings.datalocal.DataLocalManager;
+import com.example.englishdictionary.settings.datalocal.MySharePreferences;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         changeTheme();
+//        MyApplication myApplication = new MyApplication();
+        MySharePreferences mySharePreferences = new MySharePreferences(this);
+        MyApplication.setCurrent_source(mySharePreferences.getStringValue("last_source_lang"));
+        MyApplication.setCurrent_target(mySharePreferences.getStringValue("last_target_lang"));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

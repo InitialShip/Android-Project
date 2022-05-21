@@ -49,18 +49,21 @@ import com.example.englishdictionary.dictionarystranlate.Languages;
 import com.example.englishdictionary.MyApplication;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.dictionarystranlate.Translation;
+import com.example.englishdictionary.settings.datalocal.MySharePreferences;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class TransFragment extends Fragment {
-    Button btn_source, btn_target, btn_sound, btn_cancel_trans, btn_copy;
+    Button btn_source, btn_target, btn_sound, btn_cancel_trans, btn_copy, btn_switch;
     EditText source_text;
     ViewStub sound_exit_stub, main_translation_stub, sub_translation_stub;
-    TextView translation_content, target_lang_trans, phonetic;
+    TextView translation_content, target_lang_trans, phonetic, translation_for;
     ListView sub_translation_list;
     int TRANSLATION_STATUS = 0;
+    ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,13 +85,14 @@ public class TransFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        closeKeyboard(view);
         bind(view);
     }
 
     private void bind(@NonNull View view) {
         btn_source = (Button) view.findViewById(R.id.btn_source);
         btn_target = (Button) view.findViewById(R.id.btn_target);
+        btn_switch = (Button) view.findViewById(R.id.btn_switch);
         source_text = (EditText) view.findViewById(R.id.source_text);
         source_text.setImeOptions(EditorInfo.IME_ACTION_GO);
 
@@ -98,7 +102,6 @@ public class TransFragment extends Fragment {
 
         String source_name = Languages.getDisplayByShort(MyApplication.getCurrent_source());
         String target_name = Languages.getDisplayByShort(MyApplication.getCurrent_target());
-
         btn_source.setText(source_name);
         btn_target.setText(target_name);
 
@@ -108,6 +111,7 @@ public class TransFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ChooseLanguageActivity.class);
 
                 intent.putExtra("check_btn", 0);
+                getActivity().finish();
                 startActivity(intent);
             }
         });
@@ -118,9 +122,18 @@ public class TransFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ChooseLanguageActivity.class);
 
                 intent.putExtra("check_btn", 1);
+                getActivity().finish();
                 startActivity(intent);
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                onBackPressed();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         source_text.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -134,8 +147,6 @@ public class TransFragment extends Fragment {
 
                     //reveal View stub
                     showViewStub(view);
-
-
 
                     return true;
                 }
@@ -162,16 +173,36 @@ public class TransFragment extends Fragment {
             }
         });
 
-        view.setOnKeyListener(new View.OnKeyListener() {
+        btn_switch.setOnClickListener(new View.OnClickListener()  {
             @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if(keyCode == KeyEvent.KEYCODE_BACK
-                        && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                    onBackPressed();
+            public void onClick(View btn_view){
+                String temp;
+                temp = MyApplication.getCurrent_target();
+                MyApplication.setCurrent_target(MyApplication.getCurrent_source());
+                MyApplication.setCurrent_source(temp);
+
+                String source_name = Languages.getDisplayByShort(MyApplication.getCurrent_source());
+                String target_name = Languages.getDisplayByShort(MyApplication.getCurrent_target());
+                btn_source.setText(source_name);
+                btn_target.setText(target_name);
+
+                if (translation_content != null) {
+                    source_text.setText(translation_content.getText().toString());
+//
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    translation_content.setText(null);
+                    translation_for.setText(null);
+                    showViewStub(view);
+
                 }
-                return false;
+
+
+
             }
         });
+
+
     }
 
     void closeKeyboard(View view) {
@@ -190,6 +221,7 @@ public class TransFragment extends Fragment {
         btn_sound = (Button) view.findViewById(R.id.btn_sound);
         btn_cancel_trans = (Button) view.findViewById(R.id.btn_cancel_trans);
         translation_content = view.findViewById(R.id.translation_content);
+        translation_for = view.findViewById(R.id.translation_for);
         target_lang_trans = view.findViewById(R.id.target_lang_trans);
         sub_translation_list = view.findViewById(R.id.list_sub_translation);
         btn_copy = view.findViewById(R.id.btn_copy);
@@ -199,6 +231,7 @@ public class TransFragment extends Fragment {
             public void onClick(View view) {
                 source_text.setText(null);
                 translation_content.setText(null);
+                translation_for.setText(null);
                 sub_translation_list.setAdapter(null);
                 target_lang_trans.setText(null);
                 setListViewHeightBasedOnItems(sub_translation_list);
@@ -245,15 +278,20 @@ public class TransFragment extends Fragment {
 
     void showData(RetrieveEntry retrieveEntry) {
         List<CategotyEntry> categotyEntries = new ArrayList<>();
+        phonetic.setText(null);
+        btn_sound.setOnClickListener(null);
 
         List<String> sub_trans = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext()
+        adapter = new ArrayAdapter<>(getContext()
                 , R.layout.sub_translation_item, R.id.sub_translation_item, sub_trans);
 
         List<HeadwordEntry> headwordEntry = retrieveEntry.getResults();
         LexicalEntry lexicalEntries = headwordEntry.get(0).getLexicalEntries().get(0);
         Entry entry = lexicalEntries.getEntries().get(0);
-        PronunciationsListInner pronunciation = entry.getPronunciations().get(0);
+        PronunciationsList pronunciationsList = new PronunciationsList();
+        if (entry.getPronunciations() != null)
+            pronunciationsList = entry.getPronunciations();
+
         List<Sense> senses = entry.getSenses();
         TranslationsList translationsList = new TranslationsList();
 
@@ -261,7 +299,8 @@ public class TransFragment extends Fragment {
             for (Sense s : senses) {
                 if (s.getTranslations() == null) {
                     if (s.getSubsenses().size() > 0)
-                        translationsList.addAll(s.getSubsenses().get(0).getTranslations());
+                        if(s.getSubsenses().get(0).getTranslations() != null)
+                            translationsList.addAll(s.getSubsenses().get(0).getTranslations());
                 } else
                     translationsList.addAll(s.getTranslations());
             }
@@ -272,6 +311,7 @@ public class TransFragment extends Fragment {
                 }
 
                 translation_content.setText(translationsList.get(0).getText());
+                translation_for.setText(headwordEntry.get(0).getId());
                 translationsList.remove(0);
 
                 int limit = 0;
@@ -290,31 +330,36 @@ public class TransFragment extends Fragment {
                 setListViewHeightBasedOnItems(sub_translation_list);
                 translation_content.setText("No available translation");
             }
+
+            PronunciationsListInner pronunciation = pronunciationsList.get(0);
+
+            if(pronunciation != null) {
+                phonetic.setText(pronunciation.getPhoneticSpelling());
+
+                btn_sound.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            MediaPlayer player = new MediaPlayer();
+                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            player.setDataSource(pronunciation.getAudioFile());
+                            player.prepare();
+                            player.start();
+
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), "No available audio for this word"
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        if(pronunciation != null) {
-          phonetic.setText(pronunciation.getPhoneticSpelling());
 
-          btn_sound.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  try {
-                      MediaPlayer player = new MediaPlayer();
-                      player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                      player.setDataSource(pronunciation.getAudioFile());
-                      player.prepare();
-                      player.start();
-
-                  } catch (Exception e) {
-                      Toast.makeText(getContext(), "No available audio for this word"
-                              , Toast.LENGTH_SHORT).show();
-                  }
-              }
-          });
-        }
     }
 
     void onBackPressed() {
@@ -322,10 +367,16 @@ public class TransFragment extends Fragment {
             System.exit(0);
         }
         else {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+            translation_content.setText(null);
+            translation_for.setText(null);
+            phonetic.setText(null);
             source_text.setText(null);
             sound_exit_stub.setVisibility(View.GONE);
             main_translation_stub.setVisibility(View.GONE);
             sub_translation_stub.setVisibility(View.GONE);
+            TRANSLATION_STATUS = 0;
         }
     }
 
@@ -356,5 +407,13 @@ public class TransFragment extends Fragment {
             return false;
         }
 
+    }
+
+    @Override
+    public void onStop() {
+        MySharePreferences mySharePreferences = new MySharePreferences(getContext());
+        mySharePreferences.setStringValue("last_source_lang", MyApplication.getCurrent_source());
+        mySharePreferences.setStringValue("last_target_lang", MyApplication.getCurrent_target());
+        super.onStop();
     }
 }

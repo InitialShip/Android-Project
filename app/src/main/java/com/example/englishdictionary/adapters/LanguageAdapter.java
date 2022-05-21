@@ -1,5 +1,6 @@
 package com.example.englishdictionary.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class LanguageAdapter extends ArrayAdapter<String> {
                 else {
                     intent.putExtra("check_btn", 0);
                 }
+                ((Activity)context).finish();
                 context.startActivity(intent);
             }
         });
