@@ -164,28 +164,35 @@ public class SearchFragment extends Fragment {
         PronunciationsList pronunciations = entry.getPronunciations();
 
         List<Phonetic> phonetics = new ArrayList<>();
-        for(int i = 0; i < pronunciations.size(); i++) {
-            Phonetic phonetic = new Phonetic(headwordEntry.get(0).getWord()
-                    , pronunciations.get(i).getPhoneticSpelling()
-                    , pronunciations.get(i).getAudioFile());
-            phonetics.add(phonetic);
+        try {
+            for (int i = 0; i < pronunciations.size(); i++) {
+                Phonetic phonetic = new Phonetic(headwordEntry.get(0).getWord()
+                        , pronunciations.get(i).getPhoneticSpelling()
+                        , pronunciations.get(i).getAudioFile());
+                phonetics.add(phonetic);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //show phonetics
         phoneticAdapter = new PhoneticAdapter(getContext(), phonetics);
         recycler_phonetic.setAdapter(phoneticAdapter);
+        try {
+            for (LexicalEntry l : lexicalEntries) {
+                CategotyEntry categotyEntry = new CategotyEntry(l.getText()
+                        , l.getLexicalCategory().getText()
+                        , l.getEntries().get(0));
+                categoryEntries.add(categotyEntry);
+            }
 
-        for(LexicalEntry l : lexicalEntries) {
-            CategotyEntry categotyEntry = new CategotyEntry(l.getText()
-                    , l.getLexicalCategory().getText()
-                    , l.getEntries().get(0));
-            categoryEntries.add(categotyEntry);
-        }
-
-        for(CategotyEntry c : categoryEntries) {
-            Definition definition = new Definition(c.getCategory()
-                    , c.getWord(), c.getEntry()
-                    , c.getEntry().getSenses().get(0));
-            definitions.add(definition);
+            for (CategotyEntry c : categoryEntries) {
+                Definition definition = new Definition(c.getCategory()
+                        , c.getWord(), c.getEntry()
+                        , c.getEntry().getSenses().get(0));
+                definitions.add(definition);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         //show meanings

@@ -12,8 +12,9 @@
             android:title="@string/setting_theme" />
         <ListPreference
             android:entries="@array/language_spinner"
-            android:entryValues="@array/language_spinner"
+            android:entryValues="@array/language_spinner_value"
             android:key="locale"
+            app:defaultValue="vi"
             android:title="@string/setting_language"
             android:defaultValue="false" />
     </PreferenceCategory>
