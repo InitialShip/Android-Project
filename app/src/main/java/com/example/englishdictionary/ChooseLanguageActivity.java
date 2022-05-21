@@ -33,7 +33,7 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         lv_languages.setAdapter(languageAdapter);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { onBackPressed(); }
+            public void onClick(View view) { finish(); }
         });
     }
 }
