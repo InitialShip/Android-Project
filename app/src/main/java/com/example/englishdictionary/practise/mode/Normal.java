@@ -2,8 +2,8 @@ package com.example.englishdictionary.practise.mode;
 
 public class Normal extends PractiseMode{
     public Normal(){
-        this.Name = "Normal Mode";
-        this.Description = "Normal Mode";
+        this.name = "Normal Mode";
+        this.description = "Normal Mode"; //TODO change
     }
 
     @Override

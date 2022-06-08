@@ -11,6 +11,14 @@ public class Deck {
     public Deck(){
     }
 
+    public void addCard(Card newCard){
+        cards.add(newCard);
+    }
+
+    public void removeCard(Card card){
+        cards.remove(card);
+    }
+
     public void sortDeck(){
         cards.sort(Card::compare);
     }

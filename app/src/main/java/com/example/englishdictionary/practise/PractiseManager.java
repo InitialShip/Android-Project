@@ -16,7 +16,13 @@ public class PractiseManager {
         selectedMode = normalM;
     }
 
-    public void changeMode(PractiseMode newMode){
+    private void changeMode(PractiseMode newMode){
         selectedMode = newMode;
+    }
+    public void changeToNormal(){
+        selectedMode = normalM;
+    }
+    public void changeToReverb(){
+        selectedMode = reverbM;
     }
 }
