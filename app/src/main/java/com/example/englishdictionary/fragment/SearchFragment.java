@@ -1,6 +1,7 @@
 package com.example.englishdictionary.fragment;
 
 import android.app.ActionBar;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,15 @@ import androidx.transition.TransitionInflater;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.englishdictionary.MainActivity;
@@ -48,6 +53,7 @@ public class SearchFragment extends Fragment {
     FloatingActionButton btnSearch;
     DefinitionAdapter definitionAdapter;
     PhoneticAdapter phoneticAdapter;
+    MediaPlayer mMediaPlayer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +77,8 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         searchView = (AutoCompleteTextView) view.findViewById(R.id.search_view);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+
         recycler_list = (RecyclerView) view.findViewById(R.id.list);
         recycler_phonetic = (RecyclerView) view.findViewById(R.id.phonetic);
         btnSearch = (FloatingActionButton) view.findViewById(R.id.btn_search);
@@ -93,6 +101,20 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    search(searchView.getText().toString());
+                    closeKeyboard(view);
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         RequestManager requestManager = new RequestManager(getContext());
         try {
             requestManager.getWordMeaning(dataListener, "hello");
@@ -103,8 +125,8 @@ public class SearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestManager requestManager = new RequestManager(getContext());
-                requestManager.getWordMeaning(dataListener, searchView.getText().toString());
+                search(searchView.getText().toString());
+                closeKeyboard(view);
             }
         });
     }
@@ -175,7 +197,8 @@ public class SearchFragment extends Fragment {
             e.printStackTrace();
         }
         //show phonetics
-        phoneticAdapter = new PhoneticAdapter(getContext(), phonetics);
+        mMediaPlayer = new MediaPlayer();
+        phoneticAdapter = new PhoneticAdapter(getContext(), phonetics, mMediaPlayer);
         recycler_phonetic.setAdapter(phoneticAdapter);
         try {
             for (LexicalEntry l : lexicalEntries) {
@@ -198,5 +221,26 @@ public class SearchFragment extends Fragment {
         //show meanings
         definitionAdapter = new DefinitionAdapter(getContext(), definitions);
         recycler_list.setAdapter(definitionAdapter);
+    }
+
+    private void search(String keyword) {
+        RequestManager requestManager = new RequestManager(getContext());
+        requestManager.getWordMeaning(dataListener, keyword);
+
+        if (mMediaPlayer != null)
+            mMediaPlayer.release();
+    }
+
+    public void closeKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onStop() {
+        if (mMediaPlayer != null)
+            mMediaPlayer.release();
+
+        super.onStop();
     }
 }

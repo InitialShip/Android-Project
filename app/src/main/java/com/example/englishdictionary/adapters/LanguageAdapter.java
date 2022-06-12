@@ -50,6 +50,7 @@ public class LanguageAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 intent.putExtra("check_frag", 1);
                 intent.putExtra("lang", lan[position]);
