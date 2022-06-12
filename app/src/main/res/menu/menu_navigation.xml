@@ -10,6 +10,10 @@
             android:icon="@drawable/trans_icon"
             android:title="@string/nav_trans" />
         <item
+            android:id="@+id/nav_practise"
+            android:icon="@drawable/trans_icon"
+            android:title="@string/nav_practise" />
+        <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/settings_black"
             android:title="@string/nav_settings"/>

@@ -10,6 +10,7 @@
     <string name="nav_search">探す</string>
     <string name="nav_trans">パンデミック</string>
     <string name="nav_settings">設定</string>
+    <string name="nav_practise">I have no idea(fix later)</string>
 
     //nav_search
     <string name="search_term">単語を調べる</string>

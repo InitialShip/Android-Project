@@ -16,6 +16,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.englishdictionary.fragment.PractiseFragment;
 import com.example.englishdictionary.fragment.SearchFragment;
 import com.example.englishdictionary.fragment.TransFragment;
 import com.example.englishdictionary.settings.LanguageConfig;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int FRAGMENT_SEARCH = 0;
     private static final int FRAGMENT_TRANS = 1;
+    private static final int FRAGMENT_PRACTISE = 2;
 
     private int currentFragment = FRAGMENT_SEARCH;
     ActionBarDrawerToggle toggle;
@@ -101,37 +103,45 @@ public class MainActivity extends AppCompatActivity implements
             TransFragment fragment = new TransFragment();
             currentFragment = FRAGMENT_TRANS;
 
-            String choosed_lang = intent.getStringExtra("lang");
-            if (choosed_lang != null) {
+            String chosen_lang = intent.getStringExtra("lang");
+            if (chosen_lang != null) {
                 if (check_btn == 1) {
-                    if (choosed_lang.equals(MyApplication.getCurrent_source())) {
+                    if (chosen_lang.equals(MyApplication.getCurrent_source())) {
                         String temp;
                         temp = MyApplication.getCurrent_target();
                         MyApplication.setCurrent_target(MyApplication.getCurrent_source());
                         MyApplication.setCurrent_source(temp);
                     }
                     else
-                        MyApplication.setCurrent_target(choosed_lang);
+                        MyApplication.setCurrent_target(chosen_lang);
                 }
                 else {
-                    if (choosed_lang.equals(MyApplication.getCurrent_target())) {
+                    if (chosen_lang.equals(MyApplication.getCurrent_target())) {
                         String temp;
                         temp = MyApplication.getCurrent_source();
                         MyApplication.setCurrent_source(MyApplication.getCurrent_target());
                         MyApplication.setCurrent_target(temp);
                     }
                     else
-                        MyApplication.setCurrent_source(choosed_lang);
+                        MyApplication.setCurrent_source(chosen_lang);
                 }
 
             }
             replaceFragment(fragment);
             navView.getMenu().findItem(R.id.nav_trans).setChecked(true);
-        } else {
+        }
+        if(check_frag == 0){
             currentFragment = FRAGMENT_SEARCH;
             replaceFragment(new SearchFragment());
             navView.getMenu().findItem(R.id.nav_search).setChecked(true);
         }
+        if(check_frag == 2){
+            currentFragment = FRAGMENT_PRACTISE;
+            replaceFragment(new PractiseFragment());
+            navView.getMenu().findItem(R.id.nav_practise).setChecked(true);
+
+        }
+
     }
 
     @Override
@@ -152,14 +162,18 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle(R.string.nav_search);
                 currentFragment = FRAGMENT_SEARCH;
             }
-        } else if (id == R.id.nav_trans) {
+        } else
+            if (id == R.id.nav_trans) {
             replaceFragment(new TransFragment());
             getSupportActionBar().setTitle(R.string.nav_trans);
             currentFragment = FRAGMENT_TRANS;
-        } else if (id == R.id.nav_setting) {
-            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-            startActivity(intent);
-        }
+            } else if(id == R.id.nav_practise){
+                replaceFragment(new PractiseFragment());
+                getSupportActionBar().setTitle(R.string.nav_practise);
+                currentFragment = FRAGMENT_PRACTISE;
+            } else if (id == R.id.nav_setting) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);}
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
