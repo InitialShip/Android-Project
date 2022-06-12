@@ -52,10 +52,17 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         changeTheme();
-//        MyApplication myApplication = new MyApplication();
         MySharePreferences mySharePreferences = new MySharePreferences(this);
-        MyApplication.setCurrent_source(mySharePreferences.getStringValue("last_source_lang"));
-        MyApplication.setCurrent_target(mySharePreferences.getStringValue("last_target_lang"));
+
+        if (mySharePreferences.getStringValue("last_source_lang").isEmpty())
+            MyApplication.setCurrent_source("en");
+        else
+            MyApplication.setCurrent_source(mySharePreferences.getStringValue("last_source_lang"));
+
+        if(mySharePreferences.getStringValue("last_target_lang").isEmpty())
+            MyApplication.setCurrent_target("es");
+        else
+            MyApplication.setCurrent_target(mySharePreferences.getStringValue("last_target_lang"));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

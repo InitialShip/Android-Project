@@ -16,18 +16,20 @@
         app:cardBackgroundColor="?attr/background"
         app:cardElevation="0dp">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/gray_background">
+                android:background="@drawable/gray_background"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_source"
-                    android:layout_width="152dp"
+                    android:layout_width="0dip"
+                    android:layout_weight="0.4"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
                     android:drawableEnd="@drawable/arrow_drop_down"
@@ -38,7 +40,8 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_switch"
-                    android:layout_width="69dp"
+                    android:layout_width="0dip"
+                    android:layout_weight="0.2"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
                     android:drawableStart="@drawable/arrow_forward_white"
@@ -46,11 +49,12 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_target"
-                    android:layout_width="161dp"
+                    android:layout_width="0dip"
+                    android:layout_weight="0.4"
                     android:layout_height="match_parent"
                     android:background="@drawable/gray_background"
-                    android:drawableEnd="@drawable/arrow_drop_down"
-                    android:paddingEnd="25dp"
+                    android:drawableRight="@drawable/arrow_drop_down"
+                    android:paddingEnd="20dp"
                     android:text="@string/language_2"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white" />
@@ -104,8 +108,7 @@
                     android:layout_width="match_parent"
                     android:inflatedId="@+id/sub_tree"
                     android:layout_height="wrap_content"
-                    android:layout="@layout/main_translation"
-                    android:layout_marginTop="20dp"/>
+                    android:layout="@layout/main_translation"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView

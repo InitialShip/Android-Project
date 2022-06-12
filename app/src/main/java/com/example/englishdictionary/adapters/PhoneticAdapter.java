@@ -22,10 +22,12 @@ import java.util.List;
 public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticViewHolder> {
     public Context context;
     public List<Phonetic> phoneticList;
+    public MediaPlayer mediaPlayer;
 
-    public PhoneticAdapter(Context context, List<Phonetic> phonetics) {
+    public PhoneticAdapter(Context context, List<Phonetic> phonetics, MediaPlayer mediaPlayer) {
         this.context = context;
         this.phoneticList = phonetics;
+        this.mediaPlayer = mediaPlayer;
     }
 
     @NonNull
@@ -42,16 +44,22 @@ public class PhoneticAdapter extends RecyclerView.Adapter<PhoneticViewHolder> {
         holder.word.setText(phoneticList.get(position).getWord() + " ");
         holder.spellWord.setText("[" + phoneticList.get(position).getWordSpelling() + "]");
 
+
+        try {
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setDataSource(phoneticList.get(position).getAudioFile());
+
+            mediaPlayer.prepareAsync();
+        } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
+        }
+
         holder.playAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MediaPlayer player = new MediaPlayer();
                 try {
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource(phoneticList.get(position).getAudioFile());
-                    player.prepare();
-                    player.start();
-                } catch (IOException | NullPointerException e) {
+                    mediaPlayer.start();
+                } catch (NullPointerException e) {
                     e.printStackTrace();
                     Toast.makeText(context, "Couldn't play audio", Toast.LENGTH_SHORT).show();
                 }

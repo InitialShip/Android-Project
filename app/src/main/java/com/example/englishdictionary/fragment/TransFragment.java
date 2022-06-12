@@ -62,6 +62,7 @@ public class TransFragment extends Fragment {
     ViewStub sound_exit_stub, main_translation_stub, sub_translation_stub;
     TextView translation_content, target_lang_trans, phonetic, translation_for;
     ListView sub_translation_list;
+    MediaPlayer mMediaPlayer;
     int TRANSLATION_STATUS = 0;
     ArrayAdapter<String> adapter;
 
@@ -109,9 +110,9 @@ public class TransFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChooseLanguageActivity.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("check_btn", 0);
-                getActivity().finish();
+
                 startActivity(intent);
             }
         });
@@ -120,9 +121,9 @@ public class TransFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChooseLanguageActivity.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("check_btn", 1);
-                getActivity().finish();
+
                 startActivity(intent);
             }
         });
@@ -205,7 +206,7 @@ public class TransFragment extends Fragment {
 
     }
 
-    void closeKeyboard(View view) {
+    public void closeKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
@@ -335,16 +336,17 @@ public class TransFragment extends Fragment {
 
             if(pronunciation != null) {
                 phonetic.setText(pronunciation.getPhoneticSpelling());
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mMediaPlayer.setDataSource(pronunciation.getAudioFile());
+                mMediaPlayer.prepareAsync();
 
                 btn_sound.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         try {
-                            MediaPlayer player = new MediaPlayer();
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(pronunciation.getAudioFile());
-                            player.prepare();
-                            player.start();
+
+                            mMediaPlayer.start();
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), "No available audio for this word"
@@ -414,6 +416,8 @@ public class TransFragment extends Fragment {
         MySharePreferences mySharePreferences = new MySharePreferences(getContext());
         mySharePreferences.setStringValue("last_source_lang", MyApplication.getCurrent_source());
         mySharePreferences.setStringValue("last_target_lang", MyApplication.getCurrent_target());
+        if (mMediaPlayer != null)
+            mMediaPlayer.release();
         super.onStop();
     }
 }
