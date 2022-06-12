@@ -10,6 +10,7 @@
     <string name="nav_search">Tra Cứu</string>
     <string name="nav_trans">Dịch</string>
     <string name="nav_settings">Cài đặt</string>
+    <string name="nav_practise">Luyện tập</string>
 
     //nav_search
     <string name="search_term">Tra từ</string>

@@ -5,12 +5,17 @@ public class Card {
     private String backFace; // word's meaning or something
     private String hint;
     private String soundURL;
-    private WordType type;
+    private WordType type; // might obsolete
     private int correct;
     private int wrong;
     private int total;
 
     public Card() {
+    }
+    public Card(String front,String back,WordType type){
+        this.frontFace = front;
+        this.backFace = back;
+        this.type = type;
     }
 
     public double getRate(){
@@ -18,7 +23,7 @@ public class Card {
     }
 
     public int compare(Card otherCard) {
-        if(this.total < otherCard.total)
+        if(this.total <= otherCard.total)
             return -1;
         return Double.compare(this.getRate(), otherCard.getRate());
     }
