@@ -4,6 +4,7 @@ public class Normal extends PractiseMode{
     public Normal(){
         this.name = "Normal Mode";
         this.description = "Normal Mode"; //TODO change
+
     }
 
     @Override

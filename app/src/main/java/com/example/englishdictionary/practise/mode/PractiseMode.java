@@ -3,6 +3,7 @@ package com.example.englishdictionary.practise.mode;
 import com.example.englishdictionary.practise.Deck;
 
 public abstract class PractiseMode {
+    //TODO them dong nghia
     protected String name;
     protected String description;
     protected Deck selectedDeck;
