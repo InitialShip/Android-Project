@@ -12,9 +12,8 @@ import java.util.List;
 public class PractiseManager {
     private Meta meta;
     private List<Deck> decks;
-    private Deck selectedDeck;
 
-    private PractiseMode selectedMode;
+    private static PractiseMode selectedMode;
     private final Normal normalM; // default mode
     private final Reverb reverbM;
 
@@ -25,12 +24,19 @@ public class PractiseManager {
 
         selectedMode = normalM;
     }
-    public Deck getSelectedDeck() {
-        return selectedDeck;
+    public static PractiseMode getMode(){
+        return selectedMode;
+    }
+    public void sortDecks(){
+        decks.sort(Deck::compare);
     }
 
-    public void setSelectedDeck(Deck selectedDeck) {
-        this.selectedDeck = selectedDeck;
+    public Deck getSelectedDeck() {
+        return selectedMode.getSelectedDeck();
+    }
+
+    public void setSelectedDeck(Deck newDeck) {
+        selectedMode.setSelectedDeckDeck(newDeck);
     }
 
     public void setMeta(Meta meta){
