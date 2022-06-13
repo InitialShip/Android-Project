@@ -33,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.englishdictionary.ChooseLanguageActivity;
-import com.example.englishdictionary.adapters.SubTranslationAdapter;
 import com.example.englishdictionary.dictionaryapi.OnFetchDataListener;
 import com.example.englishdictionary.dictionaryapi.RequestManager;
 import com.example.englishdictionary.dictionaryapi.model.Entry;
