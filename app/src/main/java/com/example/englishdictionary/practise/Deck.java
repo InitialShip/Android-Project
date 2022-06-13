@@ -46,7 +46,7 @@ public class Deck {
     }
 
     public void sortDeck(){
-        cards.sort(Card::compare);
+        cards.sort((Card::compare));
     }
 
     public String getDeckName() {
@@ -73,11 +73,8 @@ public class Deck {
         this.latestPractise = latestPractise;
     }
 
-    @Override
-    public String toString() {
-        return "Deck{" +
-                "deckName='" + deckName + '\'' +
-                ", latestPractise=" + latestPractise +
-                '}';
+    public int compare(Deck otherDeck) {
+        return this.getDeckName().compareTo(otherDeck.getDeckName());
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.englishdictionary.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.practise.Card;
 import com.example.englishdictionary.practise.Deck;
+import com.example.englishdictionary.practise.PractiseActivity;
 import com.example.englishdictionary.practise.PractiseManager;
 import com.example.englishdictionary.practise.WordType;
 import com.example.englishdictionary.practise.adapter.DeckAdapter;
@@ -76,7 +78,7 @@ public class PractiseFragment extends Fragment {
         }
         practiseManager = new PractiseManager();
         prepareData();
-        generateSample();
+        //generateSample();
     }
 
     @Override
@@ -97,11 +99,9 @@ public class PractiseFragment extends Fragment {
         deckListView.setAdapter(deckAdapter);
 
         deckListView.setOnItemClickListener(((adapterView, view1, i, l) -> {
-            Toast.makeText(this.getContext(),
-                    practiseManager.getDecks().get(i).getDeckName() +"\n"+
-                            practiseManager.getDecks().get(i).getPrefName() +"\n"+
-                            practiseManager.getDecks().get(i).getAmount()
-                    ,Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), PractiseActivity.class);
+            practiseManager.setSelectedDeck(practiseManager.getDecks().get(i));
+            startActivityForResult(intent,10);
         }));
     }
 
@@ -122,6 +122,17 @@ public class PractiseFragment extends Fragment {
         if(!decks.isEmpty())
             practiseManager.setSelectedDeck(decks.get(0));
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == 2){
+            FileHandler.Save(this.getContext(),practiseManager.getSelectedDeck(),practiseManager.getSelectedDeck().getPrefName());
+            Log.v("test","save");
+        }
+    }
+
     private void generateSample(){
         if(practiseManager.getMeta() == null){
             practiseManager.setMeta(new Meta());
@@ -138,7 +149,7 @@ public class PractiseFragment extends Fragment {
         sampleDeck1.addCard(new Card("Comment","Chú thích",WordType.NOUN));
         sampleDeck1.addCard(new Card("Comment out","Chuyển lệnh thành chú thích",WordType.VERB));
         sampleDeck1.addCard(new Card("Compiler","Trình biên dịch",WordType.NOUN));
-        sampleDeck1.addCard(new Card("Constant","",WordType.NOUN));
+        sampleDeck1.addCard(new Card("Constant","Hằng số",WordType.NOUN));
         sampleDeck1.addCard(new Card("Crash","Dừng chương trình vì lỗi",WordType.VERB));
         sampleDeck1.addCard(new Card("Data structure","Cấu trúc dữ liệu",WordType.NOUN));
         sampleDeck1.addCard(new Card("Debug","Gỡ lỗi",WordType.VERB));
