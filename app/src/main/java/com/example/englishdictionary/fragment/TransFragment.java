@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
@@ -65,6 +66,7 @@ public class TransFragment extends Fragment {
     MediaPlayer mMediaPlayer;
     int TRANSLATION_STATUS = 0;
     ArrayAdapter<String> adapter;
+    NestedScrollView trans_view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +108,8 @@ public class TransFragment extends Fragment {
         btn_source.setText(source_name);
         btn_target.setText(target_name);
 
+        trans_view = view.findViewById(R.id.trans_view);
+
         btn_source.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,8 +146,6 @@ public class TransFragment extends Fragment {
 
                 if (actionId == EditorInfo.IME_ACTION_GO) {
 
-                    source_text.clearFocus();
-
                     closeKeyboard(view);
 
                     //reveal View stub
@@ -162,8 +164,8 @@ public class TransFragment extends Fragment {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
                     // Perform action on key press
-                    source_text.clearFocus();
                     closeKeyboard(view);
 
                     showViewStub(view);
@@ -241,6 +243,7 @@ public class TransFragment extends Fragment {
                 sub_translation_stub.setVisibility(View.GONE);
                 phonetic.setText(null);
                 btn_sound.setOnClickListener(null);
+                TRANSLATION_STATUS = 0;
             }
         });
 
@@ -361,7 +364,7 @@ public class TransFragment extends Fragment {
             e.printStackTrace();
         }
 
-
+        source_text.requestFocus();
     }
 
     void onBackPressed() {
