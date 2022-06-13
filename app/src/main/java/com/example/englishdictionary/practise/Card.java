@@ -5,26 +5,39 @@ public class Card {
     private String backFace; // word's meaning or something
     private String hint;
     private String soundURL;
-    private WordType type; // might obsolete
+    private WordType type;
     private int correct;
     private int wrong;
     private int total;
 
     public Card() {
     }
+
     public Card(String front,String back,WordType type){
         this.frontFace = front;
         this.backFace = back;
         this.type = type;
     }
 
+    public void increaseCorrect(){
+        this.correct++;
+    }
+
+    public void increaseWrong(){
+        this.wrong++;
+    }
+
+    public void increaseTotal(){
+        this.total++;
+    }
+
     public double getRate(){
+        if(total == 0)
+            return -1.0;
         return (correct - wrong)*1.0 / total; // LMAOOOOOOOOOOO
     }
 
     public int compare(Card otherCard) {
-        if(this.total <= otherCard.total)
-            return -1;
         return Double.compare(this.getRate(), otherCard.getRate());
     }
 
