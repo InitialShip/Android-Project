@@ -1,6 +1,5 @@
 package com.example.englishdictionary.fragment;
 
-import android.app.ActionBar;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -24,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.englishdictionary.MainActivity;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.adapters.DefinitionAdapter;
 import com.example.englishdictionary.adapters.PhoneticAdapter;
@@ -35,7 +33,7 @@ import com.example.englishdictionary.dictionaryapi.model.HeadwordEntry;
 import com.example.englishdictionary.dictionaryapi.model.LexicalEntry;
 import com.example.englishdictionary.dictionaryapi.model.PronunciationsList;
 import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
-import com.example.englishdictionary.dictionarylookup.CategotyEntry;
+import com.example.englishdictionary.dictionarylookup.CategoryEntry;
 import com.example.englishdictionary.dictionarylookup.Definition;
 import com.example.englishdictionary.dictionarylookup.Phonetic;
 import com.example.englishdictionary.dictionarylookup.searchsuggests.DataHelper;
@@ -176,7 +174,7 @@ public class SearchFragment extends Fragment {
         recycler_list.setHasFixedSize(true);
         recycler_list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<CategotyEntry> categoryEntries = new ArrayList<>();
+        List<CategoryEntry> categoryEntries = new ArrayList<>();
         List<Definition> definitions = new ArrayList<>();
 
         List<HeadwordEntry> headwordEntry = retrieveEntry.getResults();
@@ -202,13 +200,13 @@ public class SearchFragment extends Fragment {
         recycler_phonetic.setAdapter(phoneticAdapter);
         try {
             for (LexicalEntry l : lexicalEntries) {
-                CategotyEntry categotyEntry = new CategotyEntry(l.getText()
+                CategoryEntry categotyEntry = new CategoryEntry(l.getText()
                         , l.getLexicalCategory().getText()
                         , l.getEntries().get(0));
                 categoryEntries.add(categotyEntry);
             }
 
-            for (CategotyEntry c : categoryEntries) {
+            for (CategoryEntry c : categoryEntries) {
                 Definition definition = new Definition(c.getCategory()
                         , c.getWord(), c.getEntry()
                         , c.getEntry().getSenses().get(0));

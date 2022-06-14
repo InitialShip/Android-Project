@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements
     public static final String THEME_KEY = "theme";
     public static final String FRAGMENT_KEY = "fragment";
 
+    public static FragmentTransaction ft;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         String languageCode = DataLocalManager.getStringPrefs(LOCALE_KEY);
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ft = getSupportFragmentManager().beginTransaction();
         changeTheme();
         MySharePreferences mySharePreferences = new MySharePreferences(this);
 
@@ -168,7 +170,9 @@ public class MainActivity extends AppCompatActivity implements
             getSupportActionBar().setTitle(R.string.nav_trans);
             currentFragment = FRAGMENT_TRANS;
             } else if(id == R.id.nav_practise){
-                replaceFragment(new PractiseFragment());
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, new PractiseFragment(),"Practise Fragment");
+                fragmentTransaction.commit();
                 getSupportActionBar().setTitle(R.string.nav_practise);
                 currentFragment = FRAGMENT_PRACTISE;
             } else if (id == R.id.nav_setting) {
@@ -184,7 +188,9 @@ public class MainActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
     }
-
+    public static FragmentTransaction getFragmentTransaction(){
+        return MainActivity.ft;
+    }
     @Override
     protected void onResume() {
         super.onResume();

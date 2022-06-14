@@ -3,12 +3,12 @@ package com.example.englishdictionary.dictionarylookup;
 
 import com.example.englishdictionary.dictionaryapi.model.Entry;
 
-public class CategotyEntry {
+public class CategoryEntry {
     final String word;
     final String category;
     final Entry entry;
 
-    public CategotyEntry(String word, String category, Entry entry) {
+    public CategoryEntry(String word, String category, Entry entry) {
         this.word = word;
         this.category = category;
         this.entry = entry;

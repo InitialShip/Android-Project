@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Deck implements Serializable {
+public class Deck {
     private String deckName;
     private List<Card> cards;
     private String latestPractise;
@@ -24,7 +24,7 @@ public class Deck implements Serializable {
         if(deckName.length() > MAX_LENGTH)
             this.deckName = deckName.substring(0,20);
         this.deckName = deckName;
-        prefName = deckName.replaceAll("\\s+","").toLowerCase() + UUID.randomUUID().toString();
+        prefName = UUID.randomUUID().toString();
         cards = new ArrayList<>();
     }
     public String getPrefName(){

@@ -15,7 +15,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,17 +42,14 @@ import com.example.englishdictionary.dictionaryapi.model.RetrieveEntry;
 import com.example.englishdictionary.dictionaryapi.model.Sense;
 import com.example.englishdictionary.dictionaryapi.model.TranslationsList;
 import com.example.englishdictionary.dictionaryapi.model.TranslationsListInner;
-import com.example.englishdictionary.dictionarylookup.CategotyEntry;
+import com.example.englishdictionary.dictionarylookup.CategoryEntry;
 import com.example.englishdictionary.dictionarystranlate.Languages;
 import com.example.englishdictionary.MyApplication;
 import com.example.englishdictionary.R;
-import com.example.englishdictionary.dictionarystranlate.Translation;
 import com.example.englishdictionary.settings.datalocal.MySharePreferences;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class TransFragment extends Fragment {
     Button btn_source, btn_target, btn_sound, btn_cancel_trans, btn_copy, btn_switch;
@@ -283,7 +278,7 @@ public class TransFragment extends Fragment {
     };
 
     void showData(RetrieveEntry retrieveEntry) {
-        List<CategotyEntry> categotyEntries = new ArrayList<>();
+        List<CategoryEntry> categotyEntries = new ArrayList<>();
         phonetic.setText(null);
         btn_sound.setOnClickListener(null);
 

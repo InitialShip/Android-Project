@@ -11,7 +11,7 @@
             android:title="@string/nav_trans" />
         <item
             android:id="@+id/nav_practise"
-            android:icon="@drawable/trans_icon"
+            android:icon="@drawable/local_library"
             android:title="@string/nav_practise" />
         <item
             android:id="@+id/nav_setting"

@@ -12,7 +12,9 @@ public class Meta {
         this.prefName = "meta";
         data = new ArrayList<>();
     }
-
+    public void remove(String data){
+        this.data.remove(data);
+    }
     public List<String> getData() {
         return data;
     }

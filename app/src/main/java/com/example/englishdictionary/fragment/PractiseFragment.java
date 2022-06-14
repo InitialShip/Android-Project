@@ -1,11 +1,13 @@
 package com.example.englishdictionary.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
+import com.example.englishdictionary.MainActivity;
+import com.example.englishdictionary.MyApplication;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.practise.Card;
 import com.example.englishdictionary.practise.Deck;
@@ -26,6 +31,7 @@ import com.example.englishdictionary.practise.adapter.DeckAdapter;
 import com.example.englishdictionary.practise.file.FileHandler;
 import com.example.englishdictionary.practise.file.Meta;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +39,6 @@ import java.util.List;
 public class PractiseFragment extends Fragment {
     private static PractiseManager practiseManager;
 
-    private ListView deckListView;
-    private FloatingActionButton btnAddDeck;
 
     public PractiseFragment() {
         // Required empty public constructor
@@ -44,10 +48,7 @@ public class PractiseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         practiseManager = new PractiseManager();
-        prepareData();
-        //generateSample();
     }
 
     @Override
@@ -61,10 +62,12 @@ public class PractiseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        deckListView = view.findViewById(R.id.listView_deck);
-        btnAddDeck = view.findViewById(R.id.btn_addDeck);
+        prepareData();
 
-        DeckAdapter deckAdapter = new DeckAdapter(this.getContext(),R.layout.deck_display_practise,practiseManager.getDecks());
+        ListView deckListView = view.findViewById(R.id.listView_deck);
+        FloatingActionButton btnAddDeck = view.findViewById(R.id.btn_addDeck);
+        practiseManager.getDecks().sort(Deck::compare);
+        DeckAdapter deckAdapter = new DeckAdapter(MyApplication.getAppContext(),R.layout.deck_display_practise,practiseManager.getDecks());
 
         deckListView.setAdapter(deckAdapter);
 
@@ -72,25 +75,29 @@ public class PractiseFragment extends Fragment {
             Intent intent = new Intent(getActivity(), DeckEditingActivity.class);
             practiseManager.setSelectedDeck(practiseManager.getDecks().get(i));
 
-            intent.putExtra("Selected Deck",practiseManager.getDecks().get(i));
             startActivityForResult(intent,1);
         }));
         btnAddDeck.setOnClickListener(v->{
 
         });
+        FloatingActionButton btnAddSample = view.findViewById(R.id.btn_addSampleDeck);
+        btnAddSample.setOnClickListener(v->{
+            generateSample();
+            reload();
+        });
     }
 
     private void prepareData(){
         Meta meta;
-        meta = FileHandler.LoadMeta(this.getContext());
+        meta = FileHandler.LoadMeta(MyApplication.getAppContext());
         if(meta == null){
             meta = new Meta();
         }
-        practiseManager.setMeta(meta);
+        PractiseManager.setMeta(meta);
         List<Deck> decks = new ArrayList<>();
         for (String data: meta.getData()) {
             try{
-                decks.add(FileHandler.LoadDeck(this.getContext(),data));
+                decks.add(FileHandler.LoadDeck(MyApplication.getAppContext(),data));
             }catch (Exception e){}
         }
         practiseManager.setDecks(decks);
@@ -102,14 +109,37 @@ public class PractiseFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 1){
-            FileHandler.Save(this.getContext(),practiseManager.getSelectedDeck(),practiseManager.getSelectedDeck().getPrefName());
+        //1 add
+        //2 save
+        //3 delete
+        //4 practise
+        switch (resultCode){
+            case 2:
+                FileHandler.Save(MyApplication.getAppContext(),practiseManager.getSelectedDeck(),practiseManager.getSelectedDeck().getPrefName());
+                reload();
+                break;
+            case 3:
+                String name = data.getStringExtra("Deck Pref");
+                PractiseManager.getMeta().remove(name);
+                FileHandler.Save(MyApplication.getAppContext(),PractiseManager.getMeta(),PractiseManager.getMeta().getPrefName());
+                FileHandler.Delete(MyApplication.getAppContext(),name);
+                reload();
+                break;
+            case 4:
+                Intent intent = new Intent(getActivity(), PractiseActivity.class);
+                startActivityForResult(intent,1);
+                break;
         }
+    }
+    private void reload(){
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame,new PractiseFragment());
+        fragmentTransaction.commit();
     }
 
     private void generateSample(){
-        if(practiseManager.getMeta() == null){
-            practiseManager.setMeta(new Meta());
+        if(PractiseManager.getMeta() == null){
+            PractiseManager.setMeta(new Meta());
         }
         Deck sampleDeck1 = new Deck("Programing vocabulary");
         sampleDeck1.addCard(new Card("Algorithm","Thuật toán",WordType.NOUN));
@@ -152,14 +182,13 @@ public class PractiseFragment extends Fragment {
 
 
         try{
-            Meta meta = practiseManager.getMeta();
-            FileHandler.Save(this.getContext(),sampleDeck1,sampleDeck1.getPrefName());
+            Meta meta = PractiseManager.getMeta();
+            FileHandler.Save(MyApplication.getAppContext(),sampleDeck1,sampleDeck1.getPrefName());
             meta.addData(sampleDeck1.getPrefName());
-            FileHandler.Save(this.getContext(),meta, meta.getPrefName());
+            FileHandler.Save(MyApplication.getAppContext(),meta, meta.getPrefName());
         }catch (Exception e){
 
         }
-
         //Deck sampleDeck2;
     }
 }

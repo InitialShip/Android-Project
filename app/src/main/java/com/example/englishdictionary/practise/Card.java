@@ -2,7 +2,7 @@ package com.example.englishdictionary.practise;
 
 import java.io.Serializable;
 
-public class Card implements Serializable {
+public class Card {
     private String frontFace; // word
     private String backFace; // word's meaning or something
     private String hint;
