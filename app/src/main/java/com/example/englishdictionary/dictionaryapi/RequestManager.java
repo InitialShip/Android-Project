@@ -26,8 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RequestManager {
     Context context;
     final String BASE_URL = "https://od-api.oxforddictionaries.com:443/api/v2/";
-    final String app_id = "c45e4583";
-    final String app_key = "e9d8e2304273cbba24a7f8a8cf625448";
+    final String app_id = "907aad3a";
+    final String app_key = "6c609793748a3d295566de4be6367286";
     final Integer LIMIT = 10;
     final Boolean PREFIX = true;
 
@@ -89,6 +89,7 @@ public class RequestManager {
                 public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
                     if (!response.isSuccessful()) {
                         Log.v("ExpectedWord:", "0");
+                        listener.onError("Translation not available");
                         return;
                     }
                     try {
