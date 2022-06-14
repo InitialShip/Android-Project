@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishDictionary.NoActionBar">
         <activity
+            android:name=".practise.DeckEditingActivity"
+            android:exported="false" />
+        <activity
             android:name=".practise.PractiseActivity"
             android:exported="false" />
         <activity

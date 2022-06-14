@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="5dp"
     android:layout_marginBottom="5dp">
@@ -10,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Deck Name"
-        android:textSize="24sp"/>
-    <LinearLayout
+        android:textSize="24sp"
+        android:layout_marginBottom="20dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,12 +22,15 @@
             android:id="@+id/text_cardAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amount"/>
+            android:text="Amount: "
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
         <TextView
+            android:id="@+id/text_latestDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="something"/>
-    </LinearLayout>
-
-
-</RelativeLayout>
+            android:text="Latest Practise: "
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

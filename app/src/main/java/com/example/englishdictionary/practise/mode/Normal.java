@@ -2,8 +2,11 @@ package com.example.englishdictionary.practise.mode;
 
 import com.example.englishdictionary.practise.Card;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Normal extends PractiseMode{
@@ -17,6 +20,7 @@ public class Normal extends PractiseMode{
 
     @Override
     public void enter() {
+        this.selectedDeck.setLatestPractise(sdf.format(new Date()));
         cardIndex = 0;
         cardAmount = this.selectedDeck.getAmount();
         cardAmount = 4;
