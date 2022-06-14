@@ -10,7 +10,7 @@
         android:id="@+id/text_frontFace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Front Fact"
+        android:text="Front Face"
         android:textSize="32sp"
         android:layout_marginBottom="20dp"/>
     <TextView

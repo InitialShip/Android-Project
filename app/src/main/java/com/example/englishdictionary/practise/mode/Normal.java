@@ -23,7 +23,6 @@ public class Normal extends PractiseMode{
         this.selectedDeck.setLatestPractise(sdf.format(new Date()));
         cardIndex = 0;
         cardAmount = this.selectedDeck.getAmount();
-        cardAmount = 4;
         cardList = this.selectedDeck.getCards();
     }
 

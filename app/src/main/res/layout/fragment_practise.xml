@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.PractiseFragment"
     android:focusableInTouchMode="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:tag="PractiseFragment">
     <ListView
         android:id="@+id/listView_deck"
         android:layout_width="match_parent"
@@ -16,11 +17,18 @@
         android:id="@+id/btn_addDeck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/search_icon"
+        android:src="@drawable/add_square"
         android:contentDescription="@string/todo"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_addSampleDeck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/update"
+        android:contentDescription="@string/todo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf ="@+id/btn_addDeck"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

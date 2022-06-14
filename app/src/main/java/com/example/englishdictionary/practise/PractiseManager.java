@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PractiseManager {
-    private Meta meta;
+    private static Meta meta;
     private List<Deck> decks;
 
     private static PractiseMode selectedMode;
@@ -39,11 +39,11 @@ public class PractiseManager {
         selectedMode.setSelectedDeckDeck(newDeck);
     }
 
-    public void setMeta(Meta meta){
-        this.meta = meta;
+    public static void setMeta(Meta meta){
+        PractiseManager.meta = meta;
     }
-    public Meta getMeta(){
-        return meta;
+    public static Meta getMeta(){
+        return PractiseManager.meta;
     }
     public void setDecks(List<Deck> decks){
         this.decks = decks;
