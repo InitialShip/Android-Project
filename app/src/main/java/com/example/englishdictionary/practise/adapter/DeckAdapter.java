@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import com.example.englishdictionary.R;
 import com.example.englishdictionary.practise.Deck;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class DeckAdapter extends ArrayAdapter<Deck> {
@@ -33,8 +35,12 @@ public class DeckAdapter extends ArrayAdapter<Deck> {
             convertView = LayoutInflater.from(this.context).inflate(this.resource,parent,false);
 
         TextView deckName = convertView.findViewById(R.id.text_deckName);
+        TextView amount = convertView.findViewById(R.id.text_cardAmount);
+        TextView latest = convertView.findViewById(R.id.text_latestDate);
 
         deckName.setText(deck.getDeckName());
+        amount.setText("Amount: " + deck.getAmount());
+        latest.setText("Latest practise: " + deck.getLatestPractise());
 
         return convertView;
     }

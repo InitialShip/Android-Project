@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.englishdictionary.R;
 import com.example.englishdictionary.practise.Card;
 import com.example.englishdictionary.practise.Deck;
 
@@ -30,6 +32,11 @@ public class CardAdapter extends ArrayAdapter<Card> {
         if(convertView == null)
             convertView = LayoutInflater.from(this.context).inflate(this.resource,parent,false);
 
+        TextView frontFace = convertView.findViewById(R.id.text_frontFace);
+        TextView backFace = convertView.findViewById(R.id.text_backFace);
+
+        frontFace.setText(card.getFrontFace());
+        backFace.setText(card.getBackFace());
 
         return convertView;
     }

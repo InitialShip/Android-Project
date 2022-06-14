@@ -1,6 +1,8 @@
 package com.example.englishdictionary.practise;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
     private String frontFace; // word
     private String backFace; // word's meaning or something
     private String hint;
