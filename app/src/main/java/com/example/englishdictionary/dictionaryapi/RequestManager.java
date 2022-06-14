@@ -89,6 +89,7 @@ public class RequestManager {
                 public void onResponse(Call<RetrieveEntry> call, Response<RetrieveEntry> response) {
                     if (!response.isSuccessful()) {
                         Log.v("ExpectedWord:", "0");
+                        listener.onError("Translation not available");
                         return;
                     }
                     try {
