@@ -191,8 +191,11 @@ public class TransFragment extends Fragment {
                 if (translation_content != null) {
                     source_text.setText(translation_content.getText().toString());
 //
-                    adapter.clear();
-                    adapter.notifyDataSetChanged();
+                    if(adapter != null) {
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+
                     translation_content.setText(null);
                     translation_for.setText(null);
                     showViewStub(view);
