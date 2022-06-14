@@ -1,10 +1,12 @@
 package com.example.englishdictionary;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.englishdictionary.settings.datalocal.DataLocalManager;
 
 public class MyApplication extends Application {
+    private static Context context;
     private static String current_source = "en";
     private static String current_target = "es";
 
@@ -27,6 +29,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MyApplication.context = getApplicationContext();
         DataLocalManager.init(getApplicationContext());
+    }
+    public static Context getAppContext() {
+        return MyApplication.context;
     }
 }

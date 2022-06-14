@@ -1,14 +1,15 @@
 package com.example.englishdictionary.practise;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Deck {
+public class Deck implements Serializable {
     private String deckName;
     private List<Card> cards;
-    private Date latestPractise;
+    private String latestPractise;
     private final String prefName;
 
     private static final int MAX_AMOUNT = 50;
@@ -17,6 +18,7 @@ public class Deck {
     public Deck(){
         prefName = UUID.randomUUID().toString();
         cards = new ArrayList<>();
+        latestPractise = "None";
     }
     public Deck(String deckName){
         if(deckName.length() > MAX_LENGTH)
@@ -65,11 +67,11 @@ public class Deck {
         this.cards = cards;
     }
 
-    public Date getLatestPractise() {
+    public String getLatestPractise() {
         return latestPractise;
     }
 
-    public void setLatestPractise(Date latestPractise) {
+    public void setLatestPractise(String latestPractise) {
         this.latestPractise = latestPractise;
     }
 
